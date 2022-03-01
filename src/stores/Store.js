@@ -20,17 +20,17 @@ const Store = createStore({
         save:
             () =>
                 ({ setState, getState }) => {
-                    ls.set('timelinesave', JSON.stringify(getState()))
+                    ls.set('save', JSON.stringify(getState()));
                 },
 
         load:
             () =>
                 ({ setState, getState }) => {
-                    setState(JSON.parse(ls.get('timelinesave')));
+                    setState(JSON.parse(ls.get('save')));
                 },
-
     },
-    name: 'store',
+    // optional, mostly used for easy debugging
+    name: 'counter',
 });
 
 export const useStore = createHook(Store);
