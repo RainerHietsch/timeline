@@ -1,32 +1,257 @@
 import { createStore, createHook } from 'react-sweet-state';
+import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
+import _ from 'lodash';
+import {Tech} from "../data/Tech";
+import {Buildings} from "../data/Buildings";
+import {calculateCost, costMulti1} from "../data/CostMulti";
 
 const ls = require('local-storage');
+
+// FUNCTIONS
+
+const addRes = (state, res, amount) => {
+    const index = state.resources.findIndex((obj => obj.id === res));
+    state.resources[index].count = state.resources[index].count + amount;
+}
+
+const getIndex = (needle, haystack) => {
+    return haystack.findIndex((obj => obj.id === needle));
+}
+
+const calculateResourceProduction = (state) =>
+{
+    state.resources.forEach((res) => {
+        if (res.count >= res.max) return 0;
+
+        let amount = 0;
+
+        // Production from Buildings
+        res.production.buildings.forEach((buildingString) => {
+            const building = Buildings[getIndex(buildingString, Buildings)];
+            const buildingCount = state.buildings[getIndex(buildingString, state.buildings)].count;
+            const res_production = building.produces.filter((productionType) => {
+                return productionType.id === res.id;
+            })
+            res_production.forEach((productionType) => {
+                if(productionType.type === 'a') amount += productionType.rate * buildingCount;
+            })
+        })
+
+        // Production from Tech
+        res.production.tech.forEach((techString) => {
+            if(!state.finishedTech.includes(techString)) return;
+            const tech = Tech[getIndex(techString, Tech)];
+            const res_production = tech.produces.filter((productionType) => {
+                return productionType.id === res.id;
+            })
+            res_production.forEach((productionType) => {
+                if(productionType.type === 'a') amount += productionType.rate;
+            })
+        })
+
+        res.production.rate = amount;
+    })
+}
+
+const getAvailableTechFunction = (state) => {
+    state.availableTech = Tech.filter((techToCheck) => {
+        return techToCheck.req.every(val => state.finishedTech.includes(val)) &&
+            !state.finishedTech.includes(techToCheck.id)
+    })
+    return state;
+}
+
+const canAfford = (costs, state) => {
+    let canAfford = true;
+    costs.every((singleResCost) => {
+        const index = getIndex(singleResCost.id, state.resources);
+        if (singleResCost.amount > state.resources[index].count){
+            canAfford = false;
+            return false;
+        }
+        return true;
+    });
+    return canAfford;
+}
+
+const payCosts = (costs, state) => {
+    costs.forEach((singleResCost) => {
+        state.resources[getIndex(singleResCost.id, state.resources)].count -= singleResCost.amount;
+    });
+    return state;
+}
+
+const updateStorage = (state) => {
+
+    const storageBuildingCount = state.buildings.filter(building => building.id === 'storage')[0].count;
+
+    state.resources.forEach((res) => {
+        switch (res.id){
+            case "food": state.resources[getIndex('food', state.resources)].max = 50 + storageBuildingCount * 50; break;
+            case "wood": state.resources[getIndex('wood', state.resources)].max = 50 + storageBuildingCount * 50; break;
+            case "stone": state.resources[getIndex('stone', state.resources)].max = 50 + storageBuildingCount * 50; break;
+            default: break;
+        }
+    })
+
+}
 
 const Store = createStore({
     // value of the store on initialisation
     initialState: {
-        count: 0,
+        screen: 'civic',
+        currentAge: 'Stone Age',
+        finishedTech: ['nothing'],
+        availableTech: [],
+        resources: [
+            {
+                id:'science',
+                name: 'Science',
+                count: 0,
+                max: 50,
+                production: {
+                    buildings: [],
+                    tech: ['fire'],
+                    rate: 0
+                }
+            },
+          {
+              id:'food',
+              name: 'Food',
+              count: 0,
+              max: 50,
+              production: {
+                  buildings: ['farm'],
+                  tech: [],
+                  rate: 0
+              }
+          },
+          {
+              id:'wood',
+              name: 'Wood',
+              count: 0,
+              max: 50,
+              production: {
+                  buildings: ['loggingcamp'],
+                  tech: [],
+                  rate: 0
+              }
+          },
+          {
+              id:'stone',
+              name: 'Stone',
+              count: 0,
+              max: 50,
+              production: {
+                  buildings: ['stonequarry'],
+                  tech: [],
+                  rate: 0
+              }
+          },
+        ],
+        // BUILDINGS
+        buildings: [
+            {id: "stonequarry", count: 0},
+            {id: "loggingcamp",count: 0},
+            {id: "farm",count: 0},
+            {id: "storage",count: 0}
+        ],
     },
     // actions that trigger store mutation
     actions: {
-        increment:
-            () =>
+        add:
+            (res) =>
                 ({ setState, getState }) => {
-                    setState({
-                        count: getState().count + 1,
-                    });
+                    let state = getState();
+                    addRes(state, res, 1);
+                    setState({state});
                 },
 
         save:
             () =>
                 ({ setState, getState }) => {
-                    ls.set('save', JSON.stringify(getState()));
+                    ls.set('save', compressToUTF16(JSON.stringify(getState())));
                 },
 
         load:
             () =>
                 ({ setState, getState }) => {
-                    setState(JSON.parse(ls.get('save')));
+                    setState(JSON.parse(decompressFromUTF16(ls.get('save'))));
+                },
+        produce:
+            () =>
+                ({ setState, getState }) => {
+                    let state = getState();
+                    for (const [key, value] of Object.entries(state.resources)) {
+                        const amount = (value.count + value.production.rate) > value.max ? (value.max - value.count) : value.production.rate;
+                        addRes(state, value.id, amount);
+                    }
+                    setState({state});
+            },
+        changeScreen:
+            (screen) =>
+                ({ setState, getState }) => {
+                    let state = getState();
+                    state.screen = screen
+                    setState({state});
+                },
+        getAvailableTech:
+            () =>
+                ({ setState, getState }) => {
+                    let state = getState();
+                    setState(getAvailableTechFunction(state));
+                },
+        researchTech:
+            (techName) =>
+                ({ setState, getState , dispatch}) => {
+
+                    // Get the new technology
+                    let state = getState();
+                    let newTech = Tech.filter((techToCheck) => {
+                        return techToCheck.name === techName
+                    })[0]
+
+                    // Check if it's affordable
+                    if (!canAfford(newTech.cost, state)){return;}
+
+                    // Deduct the cost
+                    state = payCosts(newTech.cost, state);
+
+                    // Actually reasearch the tech
+                    state.finishedTech = state.finishedTech.concat(newTech.id);
+                    state = getAvailableTechFunction(state)
+                    calculateResourceProduction(state);
+                    setState({state});
+                },
+        buildBuilding:
+            (buildingName) =>
+                ({ setState, getState , dispatch}) => {
+
+                    // Get the new building
+                    let state = getState();
+                    let newBuilding = Buildings.filter((buildingToCheck) => {
+                        return buildingToCheck.id === buildingName
+                    })[0];
+
+                    // Get the current count
+                    const index = state.buildings.findIndex((obj => obj.id === newBuilding.id));
+                    const currentBuildingCount = state.buildings[index].count;
+
+                    // Calculate real cost
+                    const realCost = calculateCost(_.cloneDeep(newBuilding.cost), newBuilding.costMultiplier, currentBuildingCount)
+
+                    // Check if it's affordable
+                    if (!canAfford(realCost, state)){return;}
+
+                    // Deduct the cost
+                    state = payCosts(realCost, state);
+
+                    // Actually build the building
+                    state.buildings[index].count += 1;
+                    calculateResourceProduction(state);
+                    updateStorage(state);
+
+                    setState({state});
                 },
     },
     // optional, mostly used for easy debugging
