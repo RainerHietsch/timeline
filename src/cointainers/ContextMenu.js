@@ -5,6 +5,7 @@ import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import chroma from "chroma-js";
 import 'react-circular-progressbar/dist/styles.css';
 import {Data} from "../data/Data";
+import Tippy from "@tippyjs/react";
 
 function ContextMenu() {
     const [state, actions] = useStore();
@@ -13,6 +14,14 @@ function ContextMenu() {
 
     const resourceTable = state.resources.filter(res => res.count > 0).map((res) => {
         const percentage = res.count/res.max;
+
+        const rateTooltip =
+            <div className={'rateTooltipWrapper'}>
+                {res.production.rate.map((rate) => {
+                    return `${rate.name} +${rate.amount * (1000/Data.updateInterval)}`;
+                })}
+            </div>;
+
         return <div className={'resourceLine'}>
             <CircularProgressbar
                 value={percentage*100}
@@ -24,8 +33,18 @@ function ContextMenu() {
                 })}
             />
             <div className={'resourceName'}>{res.name}</div>
-            <div className={'resourceAmount'}>{millify(res.count, {precision: 2, lowercase: true})}/{res.max}</div>
-            <div className={'resourceRate'}>{res.production.perSecond}/s</div>
+            <div className={'resourceAmount'}>{millify(Math.round(res.count), {precision: 2, lowercase: true})}/{res.max}</div>
+            <Tippy
+                theme='light'
+                arrow={false}
+                placement={'bottom'}
+                offset={[0, 0]}
+                allowHTML={true}
+                content={rateTooltip}
+            >
+                <div className={'resourceRate'}>{res.production.perSecond}/s</div>
+            </Tippy>
+
         </div>
     });
 
