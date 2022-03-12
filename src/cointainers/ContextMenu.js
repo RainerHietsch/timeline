@@ -25,7 +25,7 @@ function ContextMenu() {
             />
             <div className={'resourceName'}>{res.name}</div>
             <div className={'resourceAmount'}>{millify(res.count, {precision: 2, lowercase: true})}/{res.max}</div>
-            <div className={'resourceRate'}>{res.production.rate * (1000/Data.updateInterval)}/s</div>
+            <div className={'resourceRate'}>{res.production.perSecond}/s</div>
         </div>
     });
 

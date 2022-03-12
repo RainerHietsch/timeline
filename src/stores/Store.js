@@ -112,7 +112,11 @@ const calculateTotalProductionForResource = (resObj) => {
 
     const percentageToAmount = percentageBonus * 100 / absoluteProduction;
 
-    return absoluteProduction+percentageToAmount;
+    const totalProduction = absoluteProduction+percentageToAmount;
+
+    resObj.production.perSecond = totalProduction * (1000/Data.updateInterval);
+
+    return totalProduction;
 }
 
 
@@ -134,8 +138,9 @@ const Store = createStore({
                 production: {
                     buildings: [],
                     tech: ['fire'],
-                    rate: []
-                }
+                    rate: [],
+                    perSecond: 0
+                },
             },
             {
                 id:'influence',
@@ -145,7 +150,8 @@ const Store = createStore({
                 production: {
                     buildings: [],
                     tech: ['pigments'],
-                    rate: []
+                    rate: [],
+                    perSecond: 0
                 }
             },
             {
@@ -156,7 +162,8 @@ const Store = createStore({
                 production: {
                     buildings: ['farm'],
                     tech: [],
-                    rate: []
+                    rate: [],
+                    perSecond: 0
                 }
             },
           {
@@ -167,7 +174,8 @@ const Store = createStore({
               production: {
                   buildings: ['loggingcamp'],
                   tech: [],
-                  rate: []
+                  rate: [],
+                  perSecond: 0
               }
           },
           {
@@ -178,7 +186,8 @@ const Store = createStore({
               production: {
                   buildings: ['stonequarry'],
                   tech: [],
-                  rate: []
+                  rate: [],
+                  perSecond: 0
               }
           },
         ],
