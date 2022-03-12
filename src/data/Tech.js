@@ -77,7 +77,7 @@ export const Tech = [
             {
                 id: "influence",
                 name: "Influence",
-                rate: 1,
+                rate: 0.25,
                 absolute: true
             }
         ],
@@ -114,5 +114,30 @@ export const Tech = [
             {id: 'science', name: 'Science', amount: 5},
         ],
         req: ['warfare','pigments'],
+    },
+    {
+        id: 'improvedtools',
+        name: 'Improved Tools',
+        desc: 'Increases Stone & Wood gathering efficiency',
+        era: 'Stone Age',
+        cat: 'Production',
+        cost: [
+            {id: 'science', name: 'Science', amount: 5},
+        ],
+        req: ['stonetools'],
+        produces: [
+            {
+                id: "wood",
+                name: "Wood",
+                rate: 5,
+                absolute: false
+            },
+            {
+                id: "stone",
+                name: "Stone",
+                rate: 5,
+                absolute: false
+            }
+        ],
     }
 ]

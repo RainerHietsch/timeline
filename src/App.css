@@ -209,3 +209,12 @@ svg.CircularProgressbar.resourceProgress {
   padding-bottom: 20px;
 }
 
+.rateTooltipLine{
+  display: flex;
+  justify-content: space-between;
+}
+
+.rateTooltipLine div:nth-child(2){
+  margin-left: 20px;
+}
+

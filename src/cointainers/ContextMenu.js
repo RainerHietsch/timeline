@@ -18,7 +18,15 @@ function ContextMenu() {
         const rateTooltip =
             <div className={'rateTooltipWrapper'}>
                 {res.production.rate.map((rate) => {
-                    return `${rate.name} +${rate.amount * (1000/Data.updateInterval)}`;
+                    return rate.absolute
+                        ? <div className={'rateTooltipLine'}>
+                            <div>{rate.name}</div>
+                            <div>+{rate.amount * (1000/Data.updateInterval)}</div>
+                        </div>
+                        : <div className={'rateTooltipLine'}>
+                            <div>{rate.name}</div>
+                            <div>+{rate.amount}%</div>
+                        </div>
                 })}
             </div>;
 
@@ -42,7 +50,7 @@ function ContextMenu() {
                 allowHTML={true}
                 content={rateTooltip}
             >
-                <div className={'resourceRate'}>{res.production.perSecond}/s</div>
+                <div className={'resourceRate'}>{Math.round(res.production.perSecond)}/s</div>
             </Tippy>
 
         </div>

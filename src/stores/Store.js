@@ -93,7 +93,9 @@ const updateResourceProduction = (state, source) => {
                 amount: totalProduction
             };
 
-            _.set(state, `resources[${resourceIndex}].production.rate[${rateIndex === -1 ? 0 : rateIndex}]`, rateObject);
+            _.set(state, `resources[${resourceIndex}].production.rate[${rateIndex === -1 
+                ? state.resources[resourceIndex].production.rate.length 
+                : rateIndex}]`, rateObject);
         });
     }
     return state;
@@ -110,7 +112,7 @@ const calculateTotalProductionForResource = (resObj) => {
         return sum + n.amount;
     }, 0);
 
-    const percentageToAmount = percentageBonus * 100 / absoluteProduction;
+    const percentageToAmount = percentageBonus/100*absoluteProduction;
 
     const totalProduction = absoluteProduction+percentageToAmount;
 
@@ -173,7 +175,7 @@ const Store = createStore({
               max: 50,
               production: {
                   buildings: ['loggingcamp'],
-                  tech: [],
+                  tech: ['improvedtools'],
                   rate: [],
                   perSecond: 0
               }
@@ -185,7 +187,7 @@ const Store = createStore({
               max: 50,
               production: {
                   buildings: ['stonequarry'],
-                  tech: [],
+                  tech: ['improvedtools'],
                   rate: [],
                   perSecond: 0
               }
