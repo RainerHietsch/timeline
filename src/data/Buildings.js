@@ -14,7 +14,7 @@ export const Buildings = [
                 id: "stone",
                 name: "Stone",
                 rate: 2,
-                type: "a"
+                absolute: true
             }
         ],
         desc: "Produces Stone",
@@ -35,7 +35,7 @@ export const Buildings = [
                 id: "wood",
                 name: "Wood",
                 rate: 2,
-                type: "a"
+                absolute: true
             }
         ],
         desc: "Produces Wood",
@@ -56,13 +56,13 @@ export const Buildings = [
                 id: "growth",
                 name: "Growth",
                 rate: 0.25,
-                type: "a"
+                absolute: true
             },
             {
                 id: "manpower",
                 name: "Manpower",
                 rate: 0.1,
-                type: "a"
+                absolute: true
             }
         ],
         desc: "",

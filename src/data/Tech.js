@@ -14,8 +14,8 @@ export const Tech = [
             {
                 id: "science",
                 name: "Science",
-                rate: 1,
-                type: "a"
+                rate: 0.25,
+                absolute: true
             }
         ],
     },
@@ -78,7 +78,7 @@ export const Tech = [
                 id: "influence",
                 name: "Influence",
                 rate: 1,
-                type: "a"
+                absolute: true
             }
         ],
     },

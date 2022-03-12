@@ -107,6 +107,31 @@ const getBuilding = (state, name) => {
     return state.buildings[state.buildings.findIndex((obj => obj.id === name))];
 }
 
+const updateResourceProduction = (state, source) => {
+
+    if(source.produces){
+        source.produces.forEach((sourceResourceProduction) => {
+            const resourceIndex = state.resources.findIndex((obj => obj.id === sourceResourceProduction.id));
+            const rateIndex = state.resources[resourceIndex].production.rate.findIndex((obj => obj.name === source.name));
+            const currentRateObject = state.resources[resourceIndex].production.rate[rateIndex];
+            // calculate total
+            const totalProduction =
+                currentRateObject
+                    ? currentRateObject.amount + sourceResourceProduction.rate
+                    : sourceResourceProduction.rate;
+
+            const rateObject = {
+                name: source.name,
+                absolute: sourceResourceProduction.absolute,
+                amount: totalProduction
+            };
+
+            _.set(state, `resources[${resourceIndex}].production.rate[${rateIndex === -1 ? 0 : rateIndex}]`, rateObject);
+        });
+    }
+    return state;
+}
+
 
 const Store = createStore({
     // value of the store on initialisation
@@ -126,7 +151,7 @@ const Store = createStore({
                 production: {
                     buildings: [],
                     tech: ['fire'],
-                    rate: 0
+                    rate: []
                 }
             },
             {
@@ -137,7 +162,7 @@ const Store = createStore({
                 production: {
                     buildings: [],
                     tech: ['pigments'],
-                    rate: 0
+                    rate: []
                 }
             },
             {
@@ -148,7 +173,7 @@ const Store = createStore({
                 production: {
                     buildings: ['farm'],
                     tech: [],
-                    rate: 0
+                    rate: []
                 }
             },
           {
@@ -159,7 +184,7 @@ const Store = createStore({
               production: {
                   buildings: ['loggingcamp'],
                   tech: [],
-                  rate: 0
+                  rate: []
               }
           },
           {
@@ -170,7 +195,7 @@ const Store = createStore({
               production: {
                   buildings: ['stonequarry'],
                   tech: [],
-                  rate: 0
+                  rate: []
               }
           },
         ],
@@ -276,7 +301,7 @@ const Store = createStore({
                     // Actually reasearch the tech
                     state.finishedTech = state.finishedTech.concat(newTech.id);
                     state = getAvailableTechFunction(state)
-                    calculateResourceProduction(state);
+                    state = updateResourceProduction(state, newTech);
                     setState({state});
                 },
         buildBuilding:
@@ -306,7 +331,7 @@ const Store = createStore({
 
                     // Actually build the building
                     state.buildings[index].count += 1;
-                    calculateResourceProduction(state);
+                    state = updateResourceProduction(state, newBuilding);
                     updateStorage(state);
 
                     setState({state});
