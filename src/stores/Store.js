@@ -19,41 +19,6 @@ const getIndex = (needle, haystack) => {
     return haystack.findIndex((obj => obj.id === needle));
 }
 
-const calculateResourceProduction = (state) =>
-{
-    state.resources.forEach((res) => {
-        if (res.count >= res.max) return 0;
-
-        let amount = 0;
-
-        // Production from Buildings
-        res.production.buildings.forEach((buildingString) => {
-            const building = Buildings[getIndex(buildingString, Buildings)];
-            const buildingCount = state.buildings[getIndex(buildingString, state.buildings)].count;
-            const res_production = building.produces.filter((productionType) => {
-                return productionType.id === res.id;
-            })
-            res_production.forEach((productionType) => {
-                if(productionType.type === 'a') amount += productionType.rate * buildingCount;
-            })
-        })
-
-        // Production from Tech
-        res.production.tech.forEach((techString) => {
-            if(!state.finishedTech.includes(techString)) return;
-            const tech = Tech[getIndex(techString, Tech)];
-            const res_production = tech.produces.filter((productionType) => {
-                return productionType.id === res.id;
-            })
-            res_production.forEach((productionType) => {
-                if(productionType.type === 'a') amount += productionType.rate;
-            })
-        })
-
-        res.production.rate = amount;
-    })
-}
-
 const getAvailableTechFunction = (state) => {
     state.availableTech = Tech.filter((techToCheck) => {
         return techToCheck.req.every(val => state.finishedTech.includes(val)) &&
@@ -110,7 +75,9 @@ const getBuilding = (state, name) => {
 const updateResourceProduction = (state, source) => {
 
     if(source.produces){
-        source.produces.forEach((sourceResourceProduction) => {
+        source.produces.filter((sourceResourceProduction) =>  {
+            return sourceResourceProduction.id !== 'growth';
+        }).forEach((sourceResourceProduction) => {
             const resourceIndex = state.resources.findIndex((obj => obj.id === sourceResourceProduction.id));
             const rateIndex = state.resources[resourceIndex].production.rate.findIndex((obj => obj.name === source.name));
             const currentRateObject = state.resources[resourceIndex].production.rate[rateIndex];
@@ -130,6 +97,22 @@ const updateResourceProduction = (state, source) => {
         });
     }
     return state;
+}
+
+const calculateTotalProductionForResource = (resObj) => {
+    const ratePartitioned = _.partition(resObj.production.rate,{ absolute: true});
+
+    const absoluteProduction =  _.reduce(ratePartitioned[0], function(sum, n) {
+        return sum + n.amount;
+    }, 0);
+
+    const percentageBonus =  _.reduce(ratePartitioned[1], function(sum, n) {
+        return sum + n.amount;
+    }, 0);
+
+    const percentageToAmount = percentageBonus * 100 / absoluteProduction;
+
+    return absoluteProduction+percentageToAmount;
 }
 
 
@@ -213,7 +196,7 @@ const Store = createStore({
             (res) =>
                 ({ setState, getState }) => {
                     let state = getState();
-                    addRes(state, res, 1);
+                    state = addRes(state, res, 1);
                     setState({state});
                 },
 
@@ -262,8 +245,9 @@ const Store = createStore({
                 ({ setState, getState }) => {
                     let state = getState();
                     for (const [key, value] of Object.entries(state.resources)) {
-                        const amount = (value.count + value.production.rate) > value.max ? (value.max - value.count) : value.production.rate;
-                        addRes(state, value.id, amount);
+                        const rawAmount = calculateTotalProductionForResource(value);
+                        const amount = (value.count + rawAmount) > value.max ? (value.max - value.count) : rawAmount;
+                        if(!isNaN(amount)) addRes(state, value.id, amount);
                     }
                     setState({state});
             },
