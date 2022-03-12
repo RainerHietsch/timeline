@@ -6,7 +6,6 @@ function CollectButton() {
 
     return (
         <div>
-            <Button onClick={() =>actions.add('food')}>Collect Berries</Button>
             <Button onClick={() =>actions.add('wood')}>Chop Wood</Button>
             <Button onClick={() =>actions.add('stone')}>Gather Stone</Button>
         </div>

@@ -4,7 +4,6 @@ export const Buildings = [
         name: "Stone Quarry",
         cat: "basic resource",
         cost: [
-            {id: 'food', name: 'Food', amount: 5},
             {id: 'stone', name: 'Stone', amount: 5},
             {id: 'wood', name: 'Wood', amount: 5},
         ],
@@ -19,14 +18,13 @@ export const Buildings = [
             }
         ],
         desc: "Produces Stone",
-        req: []
+        req: ['stonetools']
     },
     {
         id: "loggingcamp",
         name: "Logging Camp",
         cat: "basic resource",
         cost: [
-            {id: 'food', name: 'Food', amount: 5},
             {id: 'stone', name: 'Stone', amount: 5},
             {id: 'wood', name: 'Wood', amount: 5},
         ],
@@ -41,14 +39,13 @@ export const Buildings = [
             }
         ],
         desc: "Produces Wood",
-        req: []
+        req: ['stonetools']
     },
     {
         id: "farm",
         name: "Farm",
         cat: "basic resource",
         cost: [
-            {id: 'food', name: 'Food', amount: 5},
             {id: 'stone', name: 'Stone', amount: 5},
             {id: 'wood', name: 'Wood', amount: 5},
         ],
@@ -56,14 +53,20 @@ export const Buildings = [
         consumes: [],
         produces: [
             {
-                id: "food",
-                name: "Food",
-                rate: 2,
+                id: "growth",
+                name: "Growth",
+                rate: 0.25,
+                type: "a"
+            },
+            {
+                id: "manpower",
+                name: "Manpower",
+                rate: 0.1,
                 type: "a"
             }
         ],
-        desc: "Produces Food",
-        req: [],
+        desc: "",
+        req: ['irrigation'],
     },
     {
         id: "storage",
@@ -73,7 +76,7 @@ export const Buildings = [
             {id: 'stone', name: 'Stone', amount: 10},
             {id: 'wood', name: 'Wood', amount: 20},
         ],
-        req: ['construction'],
+        req: ['masonry'],
         consumes: [],
         produces: [],
         desc: "Stores Stuff",

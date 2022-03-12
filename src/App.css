@@ -96,19 +96,21 @@ body{
 
 .techTileWrapper{
   border-radius: 3px;
-  box-shadow: 0 0 5px 0px #cccccc;
   background: #606060;
   color: white;
   cursor: pointer;
-  min-width: 195px;
+  width: 195px;
+  height: 134px;
+  margin-right: 20px;
   text-align: center;
+  position: relative;
 }
 
 .techName{
   color: black;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  background: linear-gradient(90deg, #cad6fa, #9bb4ff);
+  background: wheat;
   padding-top: 3px;
 }
 
@@ -133,6 +135,9 @@ body{
   text-align: center;
   background: #d5d5d5;
   color: black;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 .researchButton:hover{
@@ -192,5 +197,15 @@ body{
 
 .buildingTooltipProduction{
   padding-top: 5px;
+}
+
+svg.CircularProgressbar.resourceProgress {
+  width: 15px;
+  margin: -2px 5px 0 -5px;
+}
+
+.techWrapper {
+  display: flex;
+  padding-bottom: 20px;
 }
 

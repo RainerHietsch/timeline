@@ -4,6 +4,7 @@ import _ from 'lodash';
 import {Tech} from "../data/Tech";
 import {Buildings} from "../data/Buildings";
 import {calculateCost, costMulti1} from "../data/CostMulti";
+import {Data} from "../data/Data";
 
 const ls = require('local-storage');
 
@@ -76,25 +77,36 @@ const canAfford = (costs, state) => {
 
 const payCosts = (costs, state) => {
     costs.forEach((singleResCost) => {
-        state.resources[getIndex(singleResCost.id, state.resources)].count -= singleResCost.amount;
+        state.resources[getIndex(singleResCost.id, state.resources)].count -=  Data.freeCosts ? 0 : singleResCost.amount;
     });
     return state;
 }
 
 const updateStorage = (state) => {
 
-    const storageBuildingCount = state.buildings.filter(building => building.id === 'storage')[0].count;
+    const storageBuildingBonus = state.buildings.filter(building => building.id === 'storage')[0].count * 50;
 
     state.resources.forEach((res) => {
         switch (res.id){
-            case "food": state.resources[getIndex('food', state.resources)].max = 50 + storageBuildingCount * 50; break;
-            case "wood": state.resources[getIndex('wood', state.resources)].max = 50 + storageBuildingCount * 50; break;
-            case "stone": state.resources[getIndex('stone', state.resources)].max = 50 + storageBuildingCount * 50; break;
+            case "wood": state.resources[getIndex('wood', state.resources)].max = 50 + storageBuildingBonus; break;
+            case "stone": state.resources[getIndex('stone', state.resources)].max = 50 + storageBuildingBonus; break;
             default: break;
         }
     })
-
 }
+
+const calculateGrowthValues = (state) =>
+{
+    const farms = getBuilding(state, 'farm').count;
+    const growthAmountGenerated = 0.05 * farms;
+    const grownNextLvlUpAt = 10*Math.pow(state.level,Data.growthPowerMultiplier);
+    return {growthAmountGenerated, grownNextLvlUpAt};
+}
+
+const getBuilding = (state, name) => {
+    return state.buildings[state.buildings.findIndex((obj => obj.id === name))];
+}
+
 
 const Store = createStore({
     // value of the store on initialisation
@@ -103,6 +115,8 @@ const Store = createStore({
         currentAge: 'Stone Age',
         finishedTech: ['nothing'],
         availableTech: [],
+        level: 1,
+        growth: 0,
         resources: [
             {
                 id:'science',
@@ -115,17 +129,28 @@ const Store = createStore({
                     rate: 0
                 }
             },
-          {
-              id:'food',
-              name: 'Food',
-              count: 0,
-              max: 50,
-              production: {
-                  buildings: ['farm'],
-                  tech: [],
-                  rate: 0
-              }
-          },
+            {
+                id:'influence',
+                name: 'Influence',
+                count: 0,
+                max: 50,
+                production: {
+                    buildings: [],
+                    tech: ['pigments'],
+                    rate: 0
+                }
+            },
+            {
+                id:'manpower',
+                name: 'Manpower',
+                count: 0,
+                max: 5,
+                production: {
+                    buildings: ['farm'],
+                    tech: [],
+                    rate: 0
+                }
+            },
           {
               id:'wood',
               name: 'Wood',
@@ -172,7 +197,36 @@ const Store = createStore({
                 ({ setState, getState }) => {
                     ls.set('save', compressToUTF16(JSON.stringify(getState())));
                 },
+        addGrowth:
+            (amount) =>
+                ({ setState, getState }) => {
+                    const state = getState();
+                    state.growth += amount;
+                },
+        getGrowthPercentNeeded:
+            () =>
+                ({ setState, getState }) => {
+                    const state = getState();
+                    return calculateGrowthValues(state).grownNextLvlUpAt;
+                },
+        grow:
+            () =>
+                ({ setState, getState, dispatch }) => {
+                    const state = getState();
+                    const growthValues = calculateGrowthValues(state);
 
+                    const currentGrowth = state.growth;
+                    const neededGrowth = growthValues.grownNextLvlUpAt - currentGrowth;
+                    const generatedGrowth = growthValues.growthAmountGenerated;
+
+                    if(generatedGrowth >= neededGrowth){
+                        state.growth = 0;
+                        state.level += 1;
+                        return;
+                    }
+
+                    state.growth += generatedGrowth;
+                },
         load:
             () =>
                 ({ setState, getState }) => {
@@ -212,7 +266,9 @@ const Store = createStore({
                     })[0]
 
                     // Check if it's affordable
-                    if (!canAfford(newTech.cost, state)){return;}
+                    if (!canAfford(newTech.cost, state) && !Data.freeCosts){
+                        if(!Data.freeCosts) return;
+                    }
 
                     // Deduct the cost
                     state = payCosts(newTech.cost, state);
@@ -241,7 +297,9 @@ const Store = createStore({
                     const realCost = calculateCost(_.cloneDeep(newBuilding.cost), newBuilding.costMultiplier, currentBuildingCount)
 
                     // Check if it's affordable
-                    if (!canAfford(realCost, state)){return;}
+                    if (!canAfford(realCost, state)){
+                        if(!Data.freeCosts) return;
+                    }
 
                     // Deduct the cost
                     state = payCosts(realCost, state);

@@ -6,7 +6,6 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Science',
         cost: [
-            {id: 'food', name: 'Food', amount: 1},
             {id: 'stone', name: 'Stone', amount: 1},
             {id: 'wood', name: 'Wood', amount: 1},
         ],
@@ -27,19 +26,93 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Productivity',
         cost: [
-            {id: 'science', name: 'Science', amount: 20},
+            {id: 'science', name: 'Science', amount: 5},
         ],
         req: ['fire'],
     },
     {
-        id: 'construction',
-        name: 'Construction',
+        id: 'masonry',
+        name: 'Masonry',
         desc: 'Allows the construction of basic buildings',
         era: 'Stone Age',
         cat: 'Buildings',
         cost: [
-            {id: 'science', name: 'Science', amount: 50},
+            {id: 'science', name: 'Science', amount: 5},
         ],
         req: ['stonetools'],
     },
+    {
+        id: 'wheel',
+        name: 'Wheel',
+        desc: 'A round thing that makes life easier',
+        era: 'Stone Age',
+        cat: 'Buildings',
+        cost: [
+            {id: 'science', name: 'Science', amount: 5},
+        ],
+        req: ['masonry'],
+    },
+    {
+        id: 'warfare',
+        name: 'Warfare',
+        desc: 'Unlocks Military',
+        era: 'Stone Age',
+        cat: 'Military',
+        cost: [
+            {id: 'science', name: 'Science', amount: 5},
+        ],
+        req: ['stonetools'],
+    },
+    {
+        id: 'pigments',
+        name: 'Pigments',
+        desc: 'A first step into Art & Culture',
+        era: 'Stone Age',
+        cat: 'Culture',
+        cost: [
+            {id: 'science', name: 'Science', amount: 5},
+        ],
+        req: ['fire'],
+        produces: [
+            {
+                id: "influence",
+                name: "Influence",
+                rate: 1,
+                type: "a"
+            }
+        ],
+    },
+    {
+        id: 'writing',
+        name: 'Writing',
+        desc: 'The key to preserving knowledge',
+        era: 'Stone Age',
+        cat: 'Technology',
+        cost: [
+            {id: 'science', name: 'Science', amount: 5},
+        ],
+        req: ['pigments'],
+    },
+    {
+        id: 'irrigation',
+        name: 'Irrigation',
+        desc: 'Feeding the masses',
+        era: 'Stone Age',
+        cat: 'Growth',
+        cost: [
+            {id: 'science', name: 'Science', amount: 5},
+        ],
+        req: ['masonry'],
+    },
+    {
+        id: 'scouting',
+        name: 'Scouting',
+        desc: 'Unlocks new lands',
+        era: 'Stone Age',
+        cat: 'Growth',
+        cost: [
+            {id: 'science', name: 'Science', amount: 5},
+        ],
+        req: ['warfare','pigments'],
+    }
 ]

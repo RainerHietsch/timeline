@@ -10,7 +10,7 @@ function ResearchScreen() {
     })
 
     return (
-        <div>
+        <div className={'techWrapper'}>
             {availableTech}
         </div>
     );

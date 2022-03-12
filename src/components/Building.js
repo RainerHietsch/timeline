@@ -17,12 +17,12 @@ function Building(props) {
             <div className={'buildingTooltipDesc'}>{props.data.desc}</div>
             <div className={'buildingTooltipCost'}>
                 {realCost.map((cost) => {
-                    return <div>{cost.amount} {cost.name}</div>
+                    return <div key={cost.name}>{cost.amount} {cost.name}</div>
                 })}
             </div>
             <div className={'buildingTooltipProduction'}>
                 {props.data.produces.map((res) => {
-                    return <div>{res.rate} {res.name} /s</div>
+                    return <div key={res.name}>{res.rate} {res.name} /s</div>
                 })}
             </div>
         </div>;

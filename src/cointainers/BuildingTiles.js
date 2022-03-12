@@ -6,7 +6,7 @@ function BuildingTiles() {
     const [state, actions] = useStore();
 
     let resourceBuildings = Buildings.filter((building) => {
-        return building.cat === 'basic resource';
+        return building.cat === 'basic resource' && building.req.every(val => state.finishedTech.includes(val));
     });
 
     let storageBuildings = Buildings.filter((building) => {
@@ -20,7 +20,7 @@ function BuildingTiles() {
                 <div className={'buildingCatBuildings'}>
                     {
                         resourceBuildings.map((building) => {
-                            return <Building data={building}/>
+                            return <Building key={building.id} data={building}/>
                         })
                     }
                 </div>
@@ -28,7 +28,7 @@ function BuildingTiles() {
                 <div className={'buildingCatBuildings'}>
                     {
                         storageBuildings.map((building) => {
-                            return <Building data={building}/>
+                            return <Building key={building.id} data={building}/>
                         })
                     }
                 </div>

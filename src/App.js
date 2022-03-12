@@ -1,26 +1,27 @@
 import './App.css';
 
 import { useStore } from './stores/Store';
+import * as workerTimers from 'worker-timers';
 import CivicScreen from "./cointainers/CivicScreen";
 import ResearchScreen from "./cointainers/ResearchScreen";
 import VertMenu from "./cointainers/Menu";
 import ContextMenu from "./cointainers/ContextMenu";
 import {useEffect} from "react";
 import {Button} from "semantic-ui-react";
+import {Data} from "./data/Data";
 
 function App() {
     const [state, actions] = useStore();
-
-    const CONST_UPDATE_INTERVAL = 1000;
 
     useEffect(() => {
         actions.getAvailableTech();
     });
 
     useEffect(() => {
-        setInterval(() => {
-            actions.produce()
-        }, CONST_UPDATE_INTERVAL);
+        let intervalId = workerTimers.setInterval(() => {
+            actions.produce();
+            actions.grow();
+        }, Data.updateInterval);
     }, []);
 
     return (
