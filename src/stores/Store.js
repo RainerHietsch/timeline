@@ -112,9 +112,9 @@ const calculateTotalProductionForResource = (resObj) => {
         return sum + n.amount;
     }, 0);
 
-    const percentageToAmount = percentageBonus/100*absoluteProduction;
+    const percentageToAmount = percentageBonus / 100 * absoluteProduction;
 
-    const totalProduction = absoluteProduction+percentageToAmount;
+    const totalProduction = absoluteProduction + percentageToAmount;
 
     resObj.production.perSecond = totalProduction * (1000/Data.updateInterval);
 

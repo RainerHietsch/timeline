@@ -22,6 +22,16 @@ function VertMenu() {
                     <Icon name='grid layout' />
                     Science
                 </Menu.Item>
+                {state.finishedTech.includes('warfare') &&
+                <Menu.Item
+                    name='browse'
+                    active={state.screen === 'military'}
+                    onClick={() => actions.changeScreen('military')}
+                >
+                    <Icon name='grid layout' />
+                    Military
+                </Menu.Item>
+                }
             </Menu>
         </div>
     );

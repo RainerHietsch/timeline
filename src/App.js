@@ -9,6 +9,7 @@ import ContextMenu from "./cointainers/ContextMenu";
 import {useEffect} from "react";
 import {Button} from "semantic-ui-react";
 import {Data} from "./data/Data";
+import MilitaryScreen from "./cointainers/MilitaryScreen";
 
 function App() {
     const [state, actions] = useStore();
@@ -32,6 +33,7 @@ function App() {
             <div className={'contentWrapper'}>
                 {state.screen === 'civic' && <CivicScreen />}
                 {state.screen === 'research' && <ResearchScreen />}
+                {state.screen === 'military' && <MilitaryScreen />}
                 <Button onClick={actions.save}>Save</Button>
                 <Button onClick={actions.load}>Load</Button>
             </div>
