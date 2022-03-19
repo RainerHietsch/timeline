@@ -6,6 +6,7 @@ import chroma from "chroma-js";
 import 'react-circular-progressbar/dist/styles.css';
 import {Data} from "../data/Data";
 import Tippy from "@tippyjs/react";
+import _ from 'lodash';
 
 function ContextMenu() {
     const [state, actions] = useStore();
@@ -72,7 +73,7 @@ function ContextMenu() {
                     })}
                 />
                 <div className={'resourceName'}>Land Size</div>
-                <div className={'resourceAmount'}>{state.landUsed}/{state.landsqkm}km²</div>
+                <div className={'resourceAmount'}>{state.landUsed}/{_.round(state.landsqkm,2)}km²</div>
             </div>
             {resourceTable}
         </div>

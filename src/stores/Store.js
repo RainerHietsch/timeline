@@ -5,7 +5,14 @@ import {Tech} from "../data/Tech";
 import {Buildings} from "../data/Buildings";
 import {calculateCost, costMulti1} from "../data/CostMulti";
 import {Data} from "../data/Data";
-import {randomLandInhabitants, randomLandName, randomLandSize, randomLandType} from "../functions/LandFunctions";
+import {
+    randomLandInfluenceCost,
+    randomLandInhabitants,
+    randomLandName,
+    randomLandSize,
+    randomLandType
+} from "../functions/LandFunctions";
+import {battle} from "../functions/CombatFunctions";
 var randomString = require('random-string');
 const ls = require('local-storage');
 
@@ -129,13 +136,15 @@ const generateLand = () => {
     const name = randomLandName()
     const size = randomLandSize();
     const enemies = randomLandInhabitants();
+    const influenceCost = randomLandInfluenceCost(size);
 
     return {
         id,
         name,
         type,
         size,
-        enemies
+        enemies,
+        influenceCost
     };
 }
 
@@ -150,9 +159,9 @@ const Store = createStore({
         level: 1,
         growth: 0,
         military: {
-          infantry: {count: 0, goal: 0, currentBuildProgress: 0},
-          cavalry: {count: 0,goal: 0, currentBuildProgress: 0},
-          artillery: {count: 0,goal: 0, currentBuildProgress: 0},
+          infantry: {count: 0, goal: 0, currentBuildProgress: 0, minAttack: 1, maxAttack: 4, hp:10, maxHp: 10, armour: 0},
+          cavalry: {count: 0,goal: 0, currentBuildProgress: 0, minAttack: 3, maxAttack: 12, hp:30, maxHp: 10, armour: 0},
+          artillery: {count: 0,goal: 0, currentBuildProgress: 0, minAttack: 10, maxAttack: 20, hp:15, maxHp: 10, armour: 0},
           morale: 0,
           quality: 0
         },
@@ -411,6 +420,35 @@ const Store = createStore({
                     const state = getState();
                     _.remove(state.lands, (n) => {
                         return n.id === id;
+                    });
+                    setState(state);
+                },
+        claimLand:
+            (landObj) =>
+                ({ setState, getState }) => {
+                    let state = getState();
+
+                    // Check if it's affordable
+                    const cost = [{id: 'influence', name: 'Influence', amount: landObj.influenceCost}]
+                    if (!canAfford(cost, state)){
+                        if(!Data.freeCosts) return;
+                    }
+
+                    if(landObj.enemies.length !== 0){
+                        const [won, newState] = battle(landObj.enemies, state);
+                        if(!won) {
+                            setState(newState);
+                            return;
+                        }
+                    }
+
+                    // Deduct the cost
+                    state = payCosts(cost, state);
+
+                    // Claim & Delete Land
+                    state.landsqkm += landObj.size;
+                    _.remove(state.lands, (n) => {
+                        return n.id === landObj.id;
                     });
                     setState(state);
                 },

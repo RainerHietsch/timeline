@@ -3,17 +3,29 @@ import _ from 'lodash';
 const primalInhabitants = [
     {
         name: 'Wild Boar',
-        power: 1,
+        minAttack: 1,
+        maxAttack: 3,
+        armour: 0,
+        hp: 10,
+        maxHp: 10,
         count: 0
     },
     {
         name: 'Sabertooth Tiger',
-        power: 3,
+        minAttack: 3,
+        maxAttack: 5,
+        armour: 0,
+        hp: 13,
+        maxHp: 13,
         count: 0
     },
     {
         name: 'Woolly Mammoth',
-        power: 6,
+        minAttack: 1,
+        maxAttack: 10,
+        armour: 0,
+        hp: 20,
+        maxHp: 20,
         count: 0,
     }
 ];
@@ -55,5 +67,9 @@ export const randomLandInhabitants = () => {
     }
 
     return enemies
+}
+
+export const randomLandInfluenceCost = (size) => {
+    return _.ceil(size);
 }
 

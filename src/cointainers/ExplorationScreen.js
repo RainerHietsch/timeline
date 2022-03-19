@@ -1,6 +1,7 @@
 import { useStore } from '../stores/Store';
 import {Button, Icon, Label, Message} from "semantic-ui-react";
 import _ from 'lodash';
+import Tippy from "@tippyjs/react";
 
 function ExplorationScreen() {
     const [state, actions] = useStore();
@@ -20,9 +21,11 @@ function ExplorationScreen() {
     const landsToDisplay = state.lands.map((singleLand) => {
 
         const enemyPower = _.reduce(singleLand.enemies, function(result, value, key) {
-            result += value.power;
+            result += ((value.minAttack+value.maxAttack)/2 + value.maxHp/2 + value.armour)*value.count;
             return result;
         }, 0);
+
+        const claimTooltip = <div>Claim land for <b>{singleLand.influenceCost}</b> Influence</div>
 
         return <div className={'singleLandWrapper'}>
             <Button
@@ -33,20 +36,37 @@ function ExplorationScreen() {
             >
                 <Icon name='trash'/>
             </Button>
-            <Button
-                onClick={actions.explore}
-                icon
-                floated='right'
-                style={{marginRight: '0', backgroundColor: '#8bb663'}}
+            <Tippy
+                theme='light'
+                arrow={false}
+                placement={'bottom'}
+                offset={[0, 0]}
+                allowHTML={true}
+                content={claimTooltip}
+                delay={500}
             >
-                <Icon name='globe'/>
-            </Button>
+                <div>
+                    <Button
+                        onClick={() => {actions.claimLand(singleLand)}}
+                        icon
+                        floated='right'
+                        style={{marginRight: '0', backgroundColor: '#8bb663'}}
+                    >
+                        <Icon name='globe'/>
+                    </Button>
+                </div>
+            </Tippy>
 
             <div style={{'width': '90%'}}>
                 <div className={'singleLandName'}>{singleLand.name}</div>
                 <div className={'singleLandDesc'}>{singleLand.type} ･ {singleLand.size}km²</div>
 
-                <div className={'landEnemies'}>
+                <div className={'subHeadline'}>
+                    <div>Cost</div>
+                </div>
+                <div><b>{singleLand.influenceCost}</b> Influence</div>
+
+                <div className={'subHeadline'}>
                     <div>Enemies</div>
                     {enemyPower > 0 &&
                         <div>Strength: {enemyPower}</div>

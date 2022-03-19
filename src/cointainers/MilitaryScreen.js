@@ -1,5 +1,5 @@
 import { useStore } from '../stores/Store';
-import {Button, ButtonGroup, Label, Message} from "semantic-ui-react";
+import {Button, ButtonGroup, Icon, Label, Message} from "semantic-ui-react";
 import {buildStyles, CircularProgressbar} from "react-circular-progressbar";
 
 function MilitaryScreen() {
@@ -11,27 +11,51 @@ function MilitaryScreen() {
             <Message positive>
                 <Message.Header>Troops</Message.Header>
                 <div className={'troopWrapper'}>
-                    {state.military.infantry.goal > state.military.infantry.count &&
-                        <div className={'troopProgress'}>
-                            <CircularProgressbar
-                                value={state.military.infantry.currentBuildProgress}
-                                strokeWidth={50}
-                                styles={buildStyles({
-                                    strokeLinecap: "butt",
-                                    pathColor: 'black',
-                                    rotation: 0.25,
-                                    pathTransitionDuration: 0,
-                                })}
-                            />
-                        </div>
-                    }
                     <div className={'troopDesc'}>
-                    Infantry: {
-                    state.military.infantry.goal > state.military.infantry.count
-                        ? `${state.military.infantry.count}/${state.military.infantry.goal}`
-                        : state.military.infantry.count}
+
+                        <div className={'subHeadline'}>
+                            <div>Infantry</div>
+                            {state.military.infantry.goal > state.military.infantry.count &&
+                            <div className={'troopProgress'}>
+                                <CircularProgressbar
+                                    value={state.military.infantry.currentBuildProgress}
+                                    strokeWidth={50}
+                                    styles={buildStyles({
+                                        strokeLinecap: "butt",
+                                        pathColor: 'black',
+                                        rotation: 0.25,
+                                        pathTransitionDuration: 0,
+                                    })}
+                                />
+                            </div>
+                            }
+                            <div>Strength: {((state.military.infantry.minAttack+state.military.infantry.maxAttack)/2 + state.military.infantry.maxHp/2 + state.military.infantry.armour)*state.military.infantry.count}</div>
+                        </div>
+                        <div className={'statLine'} >
+                            <div>Count</div>
+                            <div> {
+                                state.military.infantry.goal > state.military.infantry.count
+                                    ? `${state.military.infantry.count}/${state.military.infantry.goal}`
+                                    : state.military.infantry.count}</div>
+                        </div>
+                        <div className={'statLine'}>
+                            <div>Attack</div>
+                            <div>{state.military.infantry.minAttack}-{state.military.infantry.maxAttack}</div>
+                        </div>
+                        <div className={'statLine'}>
+                            <div>Hit Points</div>
+                            <div>{state.military.infantry.maxHp}</div>
+                        </div>
+                        {state.military.infantry.armour > 0 &&
+                        <div className={'statLine'}>
+                            <div>Hit Points</div>
+                            <div>{state.military.infantry.maxHp}</div>
+                        </div>
+                        }
                     </div>
-                    <Button size='mini' onClick={() => {actions.addMilitaryGoal('infantry')}}>+</Button>
+                    <Button icon size='mini' onClick={() => {actions.addMilitaryGoal('infantry')}}>
+                        <Icon name='plus' />
+                    </Button>
                 </div>
             </Message>
         </div>
