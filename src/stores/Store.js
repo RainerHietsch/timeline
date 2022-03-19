@@ -5,7 +5,8 @@ import {Tech} from "../data/Tech";
 import {Buildings} from "../data/Buildings";
 import {calculateCost, costMulti1} from "../data/CostMulti";
 import {Data} from "../data/Data";
-
+import {randomLandInhabitants, randomLandName, randomLandSize, randomLandType} from "../functions/LandFunctions";
+var randomString = require('random-string');
 const ls = require('local-storage');
 
 // FUNCTIONS
@@ -121,6 +122,23 @@ const calculateTotalProductionForResource = (resObj) => {
     return totalProduction;
 }
 
+const generateLand = () => {
+
+    const id = randomString({length: 5});
+    const type = randomLandType();
+    const name = randomLandName()
+    const size = randomLandSize();
+    const enemies = randomLandInhabitants();
+
+    return {
+        id,
+        name,
+        type,
+        size,
+        enemies
+    };
+}
+
 
 const Store = createStore({
     // value of the store on initialisation
@@ -131,6 +149,13 @@ const Store = createStore({
         availableTech: [],
         level: 1,
         growth: 0,
+        military: {
+          infantry: {count: 0, goal: 0, currentBuildProgress: 0},
+          cavalry: {count: 0,goal: 0, currentBuildProgress: 0},
+          artillery: {count: 0,goal: 0, currentBuildProgress: 0},
+          morale: 0,
+          quality: 0
+        },
         resources: [
             {
                 id:'science',
@@ -200,6 +225,11 @@ const Store = createStore({
             {id: "farm",count: 0},
             {id: "storage",count: 0}
         ],
+        // LANDS
+        landsqkm: 0.44,
+        landUsed: 0,
+        maxKnownLands: 3,
+        lands: [],
     },
     // actions that trigger store mutation
     actions: {
@@ -265,8 +295,7 @@ const Store = createStore({
         changeScreen:
             (screen) =>
                 ({ setState, getState }) => {
-                    let state = getState();
-                    state.screen = screen
+                    const state = getState().screen = screen;
                     setState({state});
                 },
         getAvailableTech:
@@ -274,6 +303,27 @@ const Store = createStore({
                 ({ setState, getState }) => {
                     let state = getState();
                     setState(getAvailableTechFunction(state));
+                    setState(state);
+                },
+        addMilitaryGoal:
+            (type) =>
+                ({ setState, getState }) => {
+
+                    let state = getState();
+
+                    const cost = Data.military.infantry.cost;
+
+                    // Check if it's affordable
+                    if (!canAfford(cost, state)){
+                        return;
+                    }
+
+                    state.military[type].goal += 1;
+
+                    state = payCosts(cost, state);
+
+                    // Deduct the cost
+                    setState(state);
                 },
         researchTech:
             (techName) =>
@@ -330,6 +380,39 @@ const Store = createStore({
                     updateStorage(state);
 
                     setState({state});
+                },
+        trainTroops:
+            () =>
+                ({ setState, getState }) => {
+                    const state = getState();
+                    const infantry = state.military.infantry;
+
+                    if(infantry.goal > infantry.count){
+                        infantry.currentBuildProgress += 2;
+                        if(infantry.currentBuildProgress >= 100){
+                            infantry.count += 1;
+                            infantry.currentBuildProgress = 0;
+                        }
+                    }
+                    setState(state);
+                },
+        explore:
+            () =>
+                ({ setState, getState }) => {
+                    const state = getState();
+                    if (state.lands.length >= state.maxKnownLands) return;
+                    const land = generateLand();
+                    state.lands.push(land);
+                    setState(state);
+                },
+        dismissLand:
+            (id) =>
+                ({ setState, getState }) => {
+                    const state = getState();
+                    _.remove(state.lands, (n) => {
+                        return n.id === id;
+                    });
+                    setState(state);
                 },
     },
     // optional, mostly used for easy debugging

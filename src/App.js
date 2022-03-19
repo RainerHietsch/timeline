@@ -10,6 +10,8 @@ import {useEffect} from "react";
 import {Button} from "semantic-ui-react";
 import {Data} from "./data/Data";
 import MilitaryScreen from "./cointainers/MilitaryScreen";
+import ExplorationScreen from "./cointainers/ExplorationScreen";
+import SettingsScreen from "./cointainers/SettingsScreen";
 
 function App() {
     const [state, actions] = useStore();
@@ -22,11 +24,12 @@ function App() {
         let intervalId = workerTimers.setInterval(() => {
             actions.produce();
             actions.grow();
+            actions.trainTroops();
         }, Data.updateInterval);
     }, []);
 
     return (
-        <div>
+        <div style={{display: 'flex'}}>
             <div className={'verticalMenu'}>
                 <VertMenu />
             </div>
@@ -34,8 +37,8 @@ function App() {
                 {state.screen === 'civic' && <CivicScreen />}
                 {state.screen === 'research' && <ResearchScreen />}
                 {state.screen === 'military' && <MilitaryScreen />}
-                <Button onClick={actions.save}>Save</Button>
-                <Button onClick={actions.load}>Load</Button>
+                {state.screen === 'exploration' && <ExplorationScreen />}
+                {state.screen === 'settings' && <SettingsScreen />}
             </div>
             <div className={'contextMenu'}>
                 <ContextMenu />

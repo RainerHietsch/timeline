@@ -55,6 +55,7 @@ body{
 
 .contextMenu{
   float: right;
+  width: 390px;
 }
 
 .contextMenuWrapper{
@@ -89,11 +90,13 @@ body{
 
 .verticalMenu{
   float: left;
+  width: 210px;
 }
 
 .contentWrapper{
   float: left;
   padding: 20px;
+  width: -webkit-fill-available;
 }
 
 .techTileWrapper{
@@ -106,6 +109,7 @@ body{
   margin-right: 20px;
   text-align: center;
   position: relative;
+  margin-top: 20px;
 }
 
 .techName{
@@ -209,6 +213,9 @@ svg.CircularProgressbar.resourceProgress {
 .techWrapper {
   display: flex;
   padding-bottom: 20px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: -20px;
 }
 
 .rateTooltipLine{
@@ -220,3 +227,59 @@ svg.CircularProgressbar.resourceProgress {
   margin-left: 20px;
 }
 
+.troopWrapper{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.troopWrapper .button{
+  margin-top: -4px;
+}
+
+.troopProgress{
+  width: 20px;
+  float: left;
+  margin-right: 10px;
+}
+
+.troopDesc{
+  padding-top: 2px;
+  margin-right: 10px;
+  font-size: 17px;
+}
+
+.landsWrapper{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.singleLandWrapper {
+  width: 350px;
+  background: #e0e2bf;
+  border-radius: 3px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.singleLandName {
+  font-size: 16px;
+  font-weight: bold;
+  color: #3d3d3d;
+}
+
+.landEnemies {
+  font-size: 15px;
+  font-style: italic;
+  border-bottom: black 1px solid;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 110%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.landSizeResource{
+
+}

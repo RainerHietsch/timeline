@@ -19,19 +19,37 @@ function VertMenu() {
                     active={state.screen === 'research'}
                     onClick={() => actions.changeScreen('research')}
                 >
-                    <Icon name='grid layout' />
+                    <Icon name='lightbulb' />
                     Science
                 </Menu.Item>
-                {state.finishedTech.includes('warfare') &&
+                {state.finishedTech.includes('nothing') &&
                 <Menu.Item
                     name='browse'
                     active={state.screen === 'military'}
                     onClick={() => actions.changeScreen('military')}
                 >
-                    <Icon name='grid layout' />
+                    <Icon name='military' />
                     Military
                 </Menu.Item>
                 }
+                {state.finishedTech.includes('scouting') &&
+                <Menu.Item
+                    name='browse'
+                    active={state.screen === 'exploration'}
+                    onClick={() => actions.changeScreen('exploration')}
+                >
+                    <Icon name='compass' />
+                    Exploration
+                </Menu.Item>
+                }
+                <Menu.Item
+                    name='settings'
+                    active={state.screen === 'settings'}
+                    onClick={() => actions.changeScreen('settings')}
+                >
+                    <Icon name='cog' />
+                    Settings
+                </Menu.Item>
             </Menu>
         </div>
     );

@@ -53,8 +53,8 @@ export const Tech = [
         req: ['masonry'],
     },
     {
-        id: 'warfare',
-        name: 'Warfare',
+        id: 'weapons',
+        name: 'Weapons',
         desc: 'Unlocks Military',
         era: 'Stone Age',
         cat: 'Military',
@@ -113,7 +113,7 @@ export const Tech = [
         cost: [
             {id: 'science', name: 'Science', amount: 5},
         ],
-        req: ['warfare','pigments'],
+        req: ['weapons','pigments'],
     },
     {
         id: 'improvedtools',
@@ -139,5 +139,5 @@ export const Tech = [
                 absolute: false
             }
         ],
-    }
+    },
 ]

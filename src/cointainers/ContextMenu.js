@@ -52,7 +52,6 @@ function ContextMenu() {
             >
                 <div className={'resourceRate'}>{Math.round(res.production.perSecond)}/s</div>
             </Tippy>
-
         </div>
     });
 
@@ -62,6 +61,19 @@ function ContextMenu() {
     return (
         <div className={'contextMenuWrapper'}>
             <Progress percent={growthPercent} size='small' color='olive' />
+            <div className={'resourceLine'}>
+                <CircularProgressbar
+                    value={state.landUsed/state.landsqkm*100}
+                    className={'resourceProgress'}
+                    strokeWidth={50}
+                    styles={buildStyles({
+                        strokeLinecap: "butt",
+                        pathColor: scale(100-(state.landUsed/state.landsqkm)).hex()
+                    })}
+                />
+                <div className={'resourceName'}>Land Size</div>
+                <div className={'resourceAmount'}>{state.landUsed}/{state.landsqkm}km²</div>
+            </div>
             {resourceTable}
         </div>
     );
