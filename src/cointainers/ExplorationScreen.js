@@ -3,6 +3,8 @@ import {Button, Icon, Label, Message} from "semantic-ui-react";
 import _ from 'lodash';
 import Tippy from "@tippyjs/react";
 
+var randomString = require('random-string');
+
 function ExplorationScreen() {
     const [state, actions] = useStore();
 
@@ -27,7 +29,7 @@ function ExplorationScreen() {
 
         const claimTooltip = <div>Claim land for <b>{singleLand.influenceCost}</b> Influence</div>
 
-        return <div className={'singleLandWrapper'}>
+        return <div key={randomString(5)} className={'singleLandWrapper'}>
             <Button
                 onClick={() => {actions.dismissLand(singleLand.id)}}
                 icon
@@ -76,10 +78,9 @@ function ExplorationScreen() {
                     <div>No one is inhabiting these lands.</div>
                 }
                 {singleLand?.enemies?.map((enemy) => {
-                    return <div>{enemy.count}x {enemy.name}</div>
+                    return <div key={randomString(5)}>{enemy.count}x {enemy.name}</div>
                 })}
             </div>
-
         </div>
     });
 

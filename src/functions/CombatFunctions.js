@@ -8,45 +8,28 @@ export const battle = (enemies, state) => {
         return { ...acc, [key]: value }
     }, {});
 
-    let whosTurn = 'player';
-    let attacker = {};
-    let defender = {};
-    let damage = 0;
-
+    let playerTurn = true;
     while(!_.includes(calculateLeft(playerArmyClean, enemies),0)){
 
-        if(whosTurn === 'player'){
-            attacker = _.sample(playerArmyClean);
-            defender = enemies[_.random(0, enemies.length-1)];
-        } else {
-            attacker = enemies[_.random(0, enemies.length-1)];
-            defender = _.sample(playerArmyClean);
-        }
+        let attacker = playerTurn ? _.sample(playerArmyClean) : _.sample(enemies);
+        let defender = playerTurn ? _.sample(enemies) : _.sample(playerArmyClean);
 
-        damage = _.random(attacker.minAttack, attacker.maxAttack);
+        let damage = _.random(attacker.minAttack, attacker.maxAttack);
         defender.hp -= damage;
 
         if(defender.hp <= 0){
-            if(whosTurn === 'player') {
-                defender.count -= 1;
-            }
-            else {
-                state = killTroops('infantry', 1, state);
-            }
+            playerTurn
+                ? defender.count -= 1
+                : state = killTroops('infantry', 1, state);
             defender.hp = defender.maxHp;
+            console.log(`1 x ${defender.name} was killed in combat!`)
         }
 
-        if(whosTurn !== 'player'){
-            _.remove(enemies, (n) => {
-                return n.count === 0;
-            });
-        } else {
-            _.remove(playerArmyClean, (n) => {
-                return n.count === 0;
-            });
-        }
+        _.remove(playerTurn ? playerArmyClean : enemies , (n) => {
+            return n.count === 0;
+        });
 
-        whosTurn = whosTurn === 'player' ? 'enemy' : 'player';
+        playerTurn = !playerTurn;
     }
 
     return [calculateLeft(playerArmyClean, enemies)[1] === 0, state];

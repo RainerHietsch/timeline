@@ -31,6 +31,25 @@ export const Tech = [
         req: ['fire'],
     },
     {
+        id: 'pigments',
+        name: 'Pigments',
+        desc: 'A first step into Art & Culture',
+        era: 'Stone Age',
+        cat: 'Culture',
+        cost: [
+            {id: 'science', name: 'Science', amount: 5},
+        ],
+        req: ['fire'],
+        produces: [
+            {
+                id: "influence",
+                name: "Influence",
+                rate: 0.25,
+                absolute: true
+            }
+        ],
+    },
+    {
         id: 'masonry',
         name: 'Masonry',
         desc: 'Allows the construction of basic buildings',
@@ -61,26 +80,7 @@ export const Tech = [
         cost: [
             {id: 'science', name: 'Science', amount: 5},
         ],
-        req: ['stonetools'],
-    },
-    {
-        id: 'pigments',
-        name: 'Pigments',
-        desc: 'A first step into Art & Culture',
-        era: 'Stone Age',
-        cat: 'Culture',
-        cost: [
-            {id: 'science', name: 'Science', amount: 5},
-        ],
-        req: ['fire'],
-        produces: [
-            {
-                id: "influence",
-                name: "Influence",
-                rate: 0.25,
-                absolute: true
-            }
-        ],
+        req: ['irrigation'],
     },
     {
         id: 'writing',

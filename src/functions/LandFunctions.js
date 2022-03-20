@@ -53,7 +53,7 @@ export const randomLandInhabitants = () => {
 
     for(let i = 0; i < numberOfEnemies; i++){
 
-        const enemy = _.sample(primalInhabitants);
+        const enemy = {..._.sample(primalInhabitants)};
         const exists = _.filter(enemies, ['name', enemy.name]);
 
         if(exists.length > 0){
