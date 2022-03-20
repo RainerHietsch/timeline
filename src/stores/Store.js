@@ -168,7 +168,8 @@ const Store = createStore({
               maxAttack: 4,
               hp:10,
               maxHp: 10,
-              armour: 0},
+              armour: 0
+          },
           cavalry: {
               name: 'Cavalry',
               count: 0,
@@ -178,7 +179,8 @@ const Store = createStore({
               maxAttack: 12,
               hp:30,
               maxHp: 10,
-              armour: 0},
+              armour: 0
+          },
           artillery: {
               name: 'Artillery',
               count: 0,
@@ -188,7 +190,8 @@ const Store = createStore({
               maxAttack: 20,
               hp:15,
               maxHp: 10,
-              armour: 0},
+              armour: 0
+          },
           morale: 0,
           quality: 0
         },
@@ -348,6 +351,7 @@ const Store = createStore({
                     let state = getState();
 
                     const cost = Data.military.infantry.cost;
+
 
                     // Check if it's affordable
                     if (!canAfford(cost, state)){

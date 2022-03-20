@@ -5,7 +5,7 @@ export const Data = {
     military: {
         infantry: {
             cost: [
-                {id: 'manpower', name: 'Manpower', amount: 0}
+                {id: 'manpower', name: 'Manpower', amount: 5}
             ],
         }
     }

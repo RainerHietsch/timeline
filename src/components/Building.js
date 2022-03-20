@@ -4,6 +4,7 @@ import _ from 'lodash';
 import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 import {calculateCost, costMulti1} from "../data/CostMulti";
+import {Data} from "../data/Data";
 
 function Building(props) {
     const [state, actions] = useStore();
@@ -22,7 +23,7 @@ function Building(props) {
             </div>
             <div className={'buildingTooltipProduction'}>
                 {props.data.produces.map((res) => {
-                    return <div key={res.name}>{res.rate} {res.name} /s</div>
+                    return <div key={res.name}>{res.rate * (1000/Data.updateInterval)} {res.name} /s</div>
                 })}
             </div>
         </div>;
