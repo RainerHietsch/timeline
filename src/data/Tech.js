@@ -6,8 +6,8 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Science',
         cost: [
-            {id: 'stone', name: 'Stone', amount: 1},
-            {id: 'wood', name: 'Wood', amount: 1},
+            {id: 'stone', name: 'Stone', amount: 5},
+            {id: 'wood', name: 'Wood', amount: 5},
         ],
         req: ['nothing'],
         produces: [
@@ -26,7 +26,7 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Productivity',
         cost: [
-            {id: 'science', name: 'Science', amount: 5},
+            {id: 'science', name: 'Science', amount: 25},
         ],
         req: ['fire'],
     },
@@ -37,7 +37,7 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Culture',
         cost: [
-            {id: 'science', name: 'Science', amount: 5},
+            {id: 'science', name: 'Science', amount: 25},
         ],
         req: ['fire'],
         produces: [
@@ -56,7 +56,7 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Buildings',
         cost: [
-            {id: 'science', name: 'Science', amount: 5},
+            {id: 'science', name: 'Science', amount: 35},
         ],
         req: ['stonetools'],
     },
@@ -67,7 +67,7 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Buildings',
         cost: [
-            {id: 'science', name: 'Science', amount: 5},
+            {id: 'science', name: 'Science', amount: 35},
         ],
         req: ['masonry'],
     },
@@ -78,7 +78,7 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Military',
         cost: [
-            {id: 'science', name: 'Science', amount: 5},
+            {id: 'science', name: 'Science', amount: 45},
         ],
         req: ['irrigation'],
     },
@@ -89,7 +89,7 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Technology',
         cost: [
-            {id: 'science', name: 'Science', amount: 5},
+            {id: 'science', name: 'Science', amount: 45},
         ],
         req: ['pigments'],
     },
@@ -100,7 +100,7 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Growth',
         cost: [
-            {id: 'science', name: 'Science', amount: 5},
+            {id: 'science', name: 'Science', amount: 35},
         ],
         req: ['masonry'],
     },
@@ -111,7 +111,7 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Growth',
         cost: [
-            {id: 'science', name: 'Science', amount: 5},
+            {id: 'science', name: 'Science', amount: 45},
         ],
         req: ['weapons','pigments'],
     },
@@ -122,7 +122,7 @@ export const Tech = [
         era: 'Stone Age',
         cat: 'Production',
         cost: [
-            {id: 'science', name: 'Science', amount: 5},
+            {id: 'science', name: 'Science', amount: 45},
         ],
         req: ['stonetools'],
         produces: [
