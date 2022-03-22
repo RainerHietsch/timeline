@@ -13,6 +13,10 @@ function BuildingTiles() {
         return building.cat === 'storage' && building.req.every(val => state.finishedTech.includes(val));
     });
 
+    let populationBuildings = Buildings.filter((building) => {
+        return building.cat === 'population' && building.req.every(val => state.finishedTech.includes(val));
+    });
+
     return (
         <div>
             <div className={'buildingCat'}>
@@ -20,6 +24,14 @@ function BuildingTiles() {
                 <div className={'buildingCatBuildings'}>
                     {
                         resourceBuildings.map((building) => {
+                            return <Building key={building.id} data={building}/>
+                        })
+                    }
+                </div>
+                <div className={'buildingCatName'}>Population</div>
+                <div className={'buildingCatBuildings'}>
+                    {
+                        populationBuildings.map((building) => {
                             return <Building key={building.id} data={building}/>
                         })
                     }
@@ -32,6 +44,7 @@ function BuildingTiles() {
                         })
                     }
                 </div>
+
             </div>
         </div>
     );

@@ -14,10 +14,22 @@ function ExplorationScreen() {
             <p>
                 There are no lands you know of, that you don't already control.
             </p>
-            <Button onClick={actions.explore}>
-                <Icon name='binoculars'/>
-                Explore your surroundings!
-            </Button>
+            <Tippy
+                theme='light'
+                arrow={false}
+                placement={'bottom'}
+                offset={[0, 0]}
+                allowHTML={true}
+                content={'Costs 10 Manpower'}
+            >
+                <div style={{ width: 'fit-content'}}>
+                    <Button onClick={actions.explore}>
+                        <Icon name='binoculars'/>
+                        Explore your surroundings!
+                    </Button>
+                </div>
+            </Tippy>
+
         </Message>
 
     const landsToDisplay = state.lands.map((singleLand) => {

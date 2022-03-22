@@ -22,7 +22,7 @@ function VertMenu() {
                     <Icon name='lightbulb' />
                     Science
                 </Menu.Item>
-                {state.finishedTech.includes('nothing') &&
+                {state.finishedTech.includes('weapons') &&
                 <Menu.Item
                     name='browse'
                     active={state.screen === 'military'}
