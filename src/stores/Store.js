@@ -57,7 +57,7 @@ const payCosts = (costs, state) => {
 
 const updateStorage = (state) => {
 
-    const storageBuildingBonus = state.buildings.filter(building => building.id === 'storage')[0].count * 50;
+    const storageBuildingBonus = state.buildings.filter(building => building.id === 'storage')[0].count * 50 * state.storageLevel;
 
     state.resources.forEach((res) => {
         switch (res.id){
@@ -158,6 +158,7 @@ const Store = createStore({
         availableTech: [],
         level: 1,
         growth: 0,
+        storageLevel: 1,
         military: {
           infantry: {
               name: 'Infantry',
@@ -262,7 +263,8 @@ const Store = createStore({
             {id: "stonequarry", count: 0},
             {id: "loggingcamp",count: 0},
             {id: "farm",count: 0},
-            {id: "storage",count: 0}
+            {id: "storage",count: 0},
+            {id: "hut",count: 0}
         ],
         // LANDS
         landsqkm: 0.44,
@@ -417,7 +419,15 @@ const Store = createStore({
                     // Actually build the building
                     state.buildings[index].count += 1;
                     state = updateResourceProduction(state, newBuilding);
-                    updateStorage(state);
+
+                    if(newBuilding.increases?.length !== 0){
+                        _.forEach(newBuilding.increases, (res) => {
+                            state.resources[getIndex(res.id, state.resources)].max += res.amount;
+                        });
+                    }
+                    if(newBuilding.cat === 'storage'){
+                        updateStorage(state);
+                    }
 
                     setState({state});
                 },
@@ -439,8 +449,18 @@ const Store = createStore({
         explore:
             () =>
                 ({ setState, getState }) => {
-                    const state = getState();
+                    let state = getState();
                     if (state.lands.length >= state.maxKnownLands) return;
+
+                    // Check if it's affordable
+                    const cost = [{id: 'manpower', name: 'Manpower', amount: 10}]
+                    if (!canAfford(cost, state)){
+                        if(!Data.freeCosts) return;
+                    }
+
+                    // Deduct the cost
+                    state = payCosts(cost, state);
+
                     const land = generateLand();
                     state.lands.push(land);
                     setState(state);
