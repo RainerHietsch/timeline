@@ -22,6 +22,14 @@ function VertMenu() {
                     <Icon name='lightbulb' />
                     Science
                 </Menu.Item>
+                <Menu.Item
+                    name='projects'
+                    active={state.screen === 'projects'}
+                    onClick={() => actions.changeScreen('projects')}
+                >
+                    <Icon name='lightbulb' />
+                    Epic Projects
+                </Menu.Item>
                 {state.finishedTech.includes('weapons') &&
                 <Menu.Item
                     name='browse'

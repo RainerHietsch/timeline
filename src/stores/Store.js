@@ -23,7 +23,7 @@ const addRes = (state, res, amount) => {
     state.resources[index].count = state.resources[index].count + amount;
 }
 
-const getIndex = (needle, haystack) => {
+export const getIndex = (needle, haystack) => {
     return haystack.findIndex((obj => obj.id === needle));
 }
 
@@ -35,7 +35,7 @@ const getAvailableTechFunction = (state) => {
     return state;
 }
 
-const canAfford = (costs, state) => {
+export const canAfford = (costs, state) => {
     let canAfford = true;
     costs.every((singleResCost) => {
         const index = getIndex(singleResCost.id, state.resources);
@@ -48,7 +48,7 @@ const canAfford = (costs, state) => {
     return canAfford;
 }
 
-const payCosts = (costs, state) => {
+export const payCosts = (costs, state) => {
     costs.forEach((singleResCost) => {
         state.resources[getIndex(singleResCost.id, state.resources)].count -=  Data.freeCosts ? 0 : singleResCost.amount;
     });
@@ -156,6 +156,8 @@ const Store = createStore({
         currentAge: 'Stone Age',
         finishedTech: ['nothing'],
         availableTech: [],
+        finishedProjects: [],
+        currentProjects: [],
         level: 1,
         growth: 0,
         storageLevel: 1,

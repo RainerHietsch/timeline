@@ -292,3 +292,40 @@ svg.CircularProgressbar.resourceProgress {
   font-size: 14px;
   line-height: 14px;
 }
+
+.project {
+  background: #e0e0e0;
+  width: 400px;
+  padding: 5px 10px;
+}
+
+.project .name {
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-size: 20px;
+  padding-bottom: 4px;
+  margin-bottom: 10px;
+}
+
+.project .tempCost{
+  display: flex;
+  margin-top: 10px;
+  width: fit-content;
+}
+
+.project .cost {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 20px;
+}
+
+.project .addPercentage{
+  padding: 20px;
+  font-size: 20px;
+  border-right: 1px solid grey;
+  width: 84px;
+}
+
+.cannotAfford{
+  color: #df4848;
+}
