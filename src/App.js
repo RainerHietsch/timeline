@@ -13,6 +13,7 @@ import MilitaryScreen from "./cointainers/MilitaryScreen";
 import ExplorationScreen from "./cointainers/ExplorationScreen";
 import SettingsScreen from "./cointainers/SettingsScreen";
 import ProjectsScreen from "./cointainers/ProjectsScreen";
+import LeaderScreen from "./cointainers/LeaderScreen";
 
 function App() {
     const [state, actions] = useStore();
@@ -36,6 +37,7 @@ function App() {
             </div>
             <div className={'contentWrapper'}>
                 {state.screen === 'civic' && <CivicScreen />}
+                {state.screen === 'leader' && <LeaderScreen />}
                 {state.screen === 'research' && <ResearchScreen />}
                 {state.screen === 'projects' && <ProjectsScreen />}
                 {state.screen === 'military' && <MilitaryScreen />}

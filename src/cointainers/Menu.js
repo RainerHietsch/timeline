@@ -6,13 +6,25 @@ function VertMenu() {
     return (
         <div>
             <Menu vertical>
-                <Menu.Item
-                    name='browse'
-                    active={state.screen === 'civic'}
-                    onClick={() => actions.changeScreen('civic')}
-                >
+                <Menu.Item>
                     <Icon name='grid layout' />
                     Civic
+                    <Menu.Menu>
+                        <Menu.Item
+                            name='Buildings'
+                            active={state.screen === 'civic'}
+                            onClick={() => actions.changeScreen('civic')}
+                        >
+                            Buildings
+                        </Menu.Item>
+                        <Menu.Item
+                            name='Leader'
+                            active={state.screen === 'leader'}
+                            onClick={() => actions.changeScreen('leader')}
+                        >
+                            Leader
+                        </Menu.Item>
+                    </Menu.Menu>
                 </Menu.Item>
                 <Menu.Item
                     name='browse'
