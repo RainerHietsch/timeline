@@ -330,7 +330,7 @@ const Store = createStore({
                     let state = getState();
                     for (const [key, value] of Object.entries(state.resources)) {
                         const rawAmount = calculateTotalProductionForResource(value);
-                        const amount = (value.count + rawAmount) > value.max ? (value.max - value.count) : rawAmount;
+                        const amount = _.clamp(rawAmount, 0, value.max - value.count);
                         if(!isNaN(amount)) addRes(state, value.id, amount);
                     }
                     setState({state});
