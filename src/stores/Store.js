@@ -1,10 +1,11 @@
-import { createStore, createHook } from 'react-sweet-state';
-import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
+import {createHook, createStore} from 'react-sweet-state';
+import {compressToUTF16, decompressFromUTF16} from 'lz-string';
 import _ from 'lodash';
 import {Tech} from "../data/Tech";
 import {Buildings} from "../data/Buildings";
-import {calculateCost, costMulti1} from "../data/CostMulti";
+import {calculateCost} from "../data/CostMulti";
 import {Data} from "../data/Data";
+import * as LandFunctions from "../functions/LandFunctions";
 import {
     randomLandInfluenceCost,
     randomLandInhabitants,
@@ -14,7 +15,8 @@ import {
 } from "../functions/LandFunctions";
 import {battle} from "../functions/CombatFunctions";
 import {getBuildingCount} from "../functions/HelperFunctions";
-import * as LandFunctions from "../functions/LandFunctions";
+import {doesPersonDie} from "../data/Leaders";
+
 var randomString = require('random-string');
 const ls = require('local-storage');
 
@@ -38,6 +40,7 @@ const getAvailableTechFunction = (state) => {
 }
 
 export const canAfford = (costs, state) => {
+    if (Data.freeCosts) return true;
     let canAfford = true;
     costs.every((singleResCost) => {
         const index = getIndex(singleResCost.id, state.resources);
@@ -283,8 +286,14 @@ const Store = createStore({
         landUsed: 0,
         maxKnownLands: 3,
         lands: [],
+
+        // Leader
         leader: undefined,
-        leaderCandidates: []
+        leaderCandidates: [],
+        leaderMinInfluenceCost: 10,
+        leaderInfluenceCostMulti: 1,
+        leaderInfluenceCostDecayPerSecond: 0.1,
+        leaderHealthVisible: true
     },
     // actions that trigger store mutation
     actions: {
@@ -392,9 +401,7 @@ const Store = createStore({
                     })[0]
 
                     // Check if it's affordable
-                    if (!canAfford(newTech.cost, state) && !Data.freeCosts){
-                        if(!Data.freeCosts) return;
-                    }
+                    if (!canAfford(newTech.cost, state)) return;
 
                     // Deduct the cost
                     state = payCosts(newTech.cost, state);
@@ -428,9 +435,7 @@ const Store = createStore({
                     const realCost = calculateCost(_.cloneDeep(newBuilding.cost), newBuilding.costMultiplier, currentBuildingCount)
 
                     // Check if it's affordable
-                    if (!canAfford(realCost, state)){
-                        if(!Data.freeCosts) return;
-                    }
+                    if (!canAfford(realCost, state)) return;
 
                     // Deduct the cost
                     state = payCosts(realCost, state);
@@ -511,6 +516,43 @@ const Store = createStore({
 
                 // calculate borderSecurity
                 state.borderSecurity = LandFunctions.calculateBorderSecurity(state);
+
+                // calculate leader regen multiplier
+                const leaderMultiDecay = state.leaderInfluenceCostDecayPerSecond / (1000/Data.updateInterval);
+                const tempLeaderMulti = state.leaderInfluenceCostMulti - leaderMultiDecay;
+                state.leaderInfluenceCostMulti = tempLeaderMulti <= 1 ? 1 : tempLeaderMulti;
+
+                // check if leader & candidates die
+                if(state.leader !== undefined){
+                    if(doesPersonDie(state.leader)){
+                        console.log(`${state.leader.name} died at the age of ${_.round(state.leader.age)} with ${_.round(state.leader.health)}% health left.`);
+                        state.leader = undefined;
+                    }
+                }
+                if(state.leaderCandidates.length > 0){
+                    state.leaderCandidates.map((candiate) => {
+                        if(doesPersonDie(candiate)){
+                            console.log(`${candiate.name} died at the age of ${_.round(candiate.age,2)} with ${_.round(candiate.health)}% health left.`);
+                            state.leaderCandidates = state.leaderCandidates.filter((sub) => {
+                                return sub.id !== candiate.id;
+                            })
+                        }
+                    })
+                }
+
+                // age leader & candidates
+                const ageGainPerTick = Data.ageGainPerHour / (3600 * (1000/Data.updateInterval));
+                if(state.leader !== undefined){
+                    state.leader.age += ageGainPerTick;
+                    state.leader.health =  _.clamp(state.leader.health - (ageGainPerTick),0,100);
+                }
+                if(state.leaderCandidates.length > 0){
+                    state.leaderCandidates.map((candiate) => {
+                        candiate.age += ageGainPerTick;
+                        candiate.health =  _.clamp(candiate.health - (ageGainPerTick),0,100);
+                    })
+                }
+
             },
         claimLand:
             (landObj) =>

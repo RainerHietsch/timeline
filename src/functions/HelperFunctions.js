@@ -8,3 +8,7 @@ export const getBuildingCount = (state, id) => {
 export const getMilitaryPower = (state) => {
     return ((state.military.infantry.minAttack+state.military.infantry.maxAttack)/2 + state.military.infantry.maxHp/2 + state.military.infantry.armour)*state.military.infantry.count;
 }
+
+export const regenLeaderInfluenceCost = (state) => {
+    return state.leaderMinInfluenceCost * state.leaderInfluenceCostMulti
+}

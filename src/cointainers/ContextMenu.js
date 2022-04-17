@@ -3,6 +3,7 @@ import millify from "millify";
 import {Progress} from "semantic-ui-react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import chroma from "chroma-js";
+import humanizeDuration from "humanize-duration";
 import 'react-circular-progressbar/dist/styles.css';
 import {Data} from "../data/Data";
 import Tippy from "@tippyjs/react";
@@ -38,6 +39,14 @@ function ContextMenu() {
                     <div className={'rateTooltipLine'} style={{borderTop: '1px solid black'}}>
                         <div>Total:</div>
                         <div>+{_.round(res.production.perSecond,2)}/s</div>
+                    </div>
+
+                    <div>
+                        Time to full: {
+                            res.max > res.count
+                             ? humanizeDuration(_.round((res.max-res.count)/res.production.perSecond)*1000)
+                             : "Full"
+                    }
                     </div>
             </div>;
 
