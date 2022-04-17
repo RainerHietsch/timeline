@@ -5,11 +5,12 @@ import 'tippy.js/dist/tippy.css';
 import 'tippy.js/themes/light.css';
 import {calculateCost, costMulti1} from "../data/CostMulti";
 import {Data} from "../data/Data";
+import {getBuildingCount} from "../functions/HelperFunctions";
 
 function Building(props) {
     const [state, actions] = useStore();
 
-    const count = state.buildings.filter(building => building.id === props.data.id)[0].count
+    const count = getBuildingCount(state, props.data.id);
 
     const realCost = calculateCost(_.cloneDeep(props.data.cost), props.data.costMultiplier, count);
 

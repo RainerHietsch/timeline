@@ -13,6 +13,7 @@ import {
     randomLandType
 } from "../functions/LandFunctions";
 import {battle} from "../functions/CombatFunctions";
+import {getBuildingCount} from "../functions/HelperFunctions";
 var randomString = require('random-string');
 const ls = require('local-storage');
 
@@ -70,7 +71,7 @@ const updateStorage = (state) => {
 
 const calculateGrowthValues = (state) =>
 {
-    const farms = getBuilding(state, 'farm').count;
+    const farms = getBuildingCount(state, 'farm');
     const growthAmountGenerated = 0.05 * farms;
     const grownNextLvlUpAt = 10*Math.pow(state.level,Data.growthPowerMultiplier);
     return {growthAmountGenerated, grownNextLvlUpAt};
@@ -274,13 +275,7 @@ const Store = createStore({
           },
         ],
         // BUILDINGS
-        buildings: [
-            {id: "stonequarry", count: 0},
-            {id: "loggingcamp",count: 0},
-            {id: "farm",count: 0},
-            {id: "storage",count: 0},
-            {id: "hut",count: 0}
-        ],
+        buildings: [],
         // LANDS
         landsqkm: 0.44,
         landUsed: 0,
@@ -419,8 +414,7 @@ const Store = createStore({
                     })[0];
 
                     // Get the current count
-                    const index = state.buildings.findIndex((obj => obj.id === newBuilding.id));
-                    const currentBuildingCount = state.buildings[index].count;
+                    const currentBuildingCount = getBuildingCount(state, newBuilding.id);
 
                     // Calculate real cost
                     const realCost = calculateCost(_.cloneDeep(newBuilding.cost), newBuilding.costMultiplier, currentBuildingCount)
@@ -434,7 +428,16 @@ const Store = createStore({
                     state = payCosts(realCost, state);
 
                     // Actually build the building
-                    state.buildings[index].count += 1;
+                    if(currentBuildingCount > 0){
+                        const index = state.buildings.findIndex((obj => obj.id === newBuilding.id));
+                        state.buildings[index].count += 1;
+                    } else {
+                        state.buildings.push({
+                            id: newBuilding.id,
+                            count: 1
+                        })
+                    }
+
                     state = updateResourceProduction(state, newBuilding);
 
                     if(newBuilding.increases?.length !== 0){
