@@ -14,6 +14,7 @@ import {
 } from "../functions/LandFunctions";
 import {battle} from "../functions/CombatFunctions";
 import {getBuildingCount} from "../functions/HelperFunctions";
+import * as LandFunctions from "../functions/LandFunctions";
 var randomString = require('random-string');
 const ls = require('local-storage');
 
@@ -175,6 +176,7 @@ const Store = createStore({
         level: 1,
         growth: 0,
         storageLevel: 1,
+        borderSecurity: 0,
         military: {
           infantry: {
               name: 'Infantry',
@@ -494,6 +496,13 @@ const Store = createStore({
                     });
                     setState(state);
                 },
+        calculations:
+            () =>  ({ setState, getState }) => {
+                let state = getState();
+
+                // calculate borderSecurity
+                state.borderSecurity = LandFunctions.calculateBorderSecurity(state);
+            },
         claimLand:
             (landObj) =>
                 ({ setState, getState }) => {

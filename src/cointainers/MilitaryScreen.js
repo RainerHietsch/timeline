@@ -1,6 +1,7 @@
 import { useStore } from '../stores/Store';
 import {Button, ButtonGroup, Icon, Label, Message} from "semantic-ui-react";
 import {buildStyles, CircularProgressbar} from "react-circular-progressbar";
+import * as HelperFunctions from "../functions/HelperFunctions";
 
 function MilitaryScreen() {
     const [state, actions] = useStore();
@@ -29,7 +30,7 @@ function MilitaryScreen() {
                                 />
                             </div>
                             }
-                            <div>Strength: {((state.military.infantry.minAttack+state.military.infantry.maxAttack)/2 + state.military.infantry.maxHp/2 + state.military.infantry.armour)*state.military.infantry.count}</div>
+                            <div>Strength: {HelperFunctions.getMilitaryPower(state)}</div>
                         </div>
                         <div className={'statLine'} >
                             <div>Count</div>

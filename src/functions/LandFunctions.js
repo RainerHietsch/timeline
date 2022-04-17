@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import * as HelperFunctions from "./HelperFunctions";
 
 const primalInhabitants = [
     {
@@ -71,5 +72,16 @@ export const randomLandInhabitants = () => {
 
 export const randomLandInfluenceCost = (size) => {
     return _.ceil(size);
+}
+
+export const calculateBorderSecurity = (state) => {
+
+    const need = calculateMilitaryStrengthNeeded(state);
+    const have = HelperFunctions.getMilitaryPower(state);
+    return _.round(_.clamp(have*100/need,0,100));
+}
+
+export const calculateMilitaryStrengthNeeded = (state) => {
+    return 6*state.landsqkm;
 }
 

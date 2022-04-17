@@ -4,3 +4,7 @@ export const getBuildingCount = (state, id) => {
     else if(buildingStats.length > 1) console.warn('Too many buildings of '+buildingStats.id)
     else if (buildingStats.length === 1) return buildingStats[0].count;
 }
+
+export const getMilitaryPower = (state) => {
+    return ((state.military.infantry.minAttack+state.military.infantry.maxAttack)/2 + state.military.infantry.maxHp/2 + state.military.infantry.armour)*state.military.infantry.count;
+}

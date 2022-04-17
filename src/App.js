@@ -27,6 +27,7 @@ function App() {
             actions.produce();
             actions.grow();
             actions.trainTroops();
+            actions.calculations();
         }, Data.updateInterval);
     }, []);
 

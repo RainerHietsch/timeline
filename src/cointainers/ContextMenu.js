@@ -7,6 +7,8 @@ import 'react-circular-progressbar/dist/styles.css';
 import {Data} from "../data/Data";
 import Tippy from "@tippyjs/react";
 import _ from 'lodash';
+import * as HelperFunctions from "../functions/HelperFunctions";
+import * as LandFunctions from "../functions/LandFunctions";
 
 function ContextMenu() {
     const [state, actions] = useStore();
@@ -83,6 +85,24 @@ function ContextMenu() {
                 <div className={'resourceName'}>Land Size</div>
                 <div className={'resourceAmount'}>{state.landUsed}/{_.round(state.landsqkm,2)}km²</div>
             </div>
+            <div className={'resourceLine'}>
+                <div className={'resourceName'}>Border Security</div>
+                <Tippy
+                    theme='light'
+                    arrow={false}
+                    placement={'bottom'}
+                    offset={[0, 0]}
+                    allowHTML={true}
+                    content={<div>
+                        Needed: {_.round(LandFunctions.calculateMilitaryStrengthNeeded(state))}<br />
+                        Present: {_.round(HelperFunctions.getMilitaryPower(state))}
+                    </div>}
+                >
+                    <div className={'resourceAmount'}>{state.borderSecurity}%</div>
+                </Tippy>
+
+            </div>
+
             {resourceTable}
         </div>
     );
