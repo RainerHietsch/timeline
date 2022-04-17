@@ -49,6 +49,7 @@ export const Buildings = [
             {id: 'stone', name: 'Stone', amount: 5},
             {id: 'wood', name: 'Wood', amount: 5},
         ],
+        land: 0.12,
         costMultiplier: 3,
         consumes: [],
         produces: [

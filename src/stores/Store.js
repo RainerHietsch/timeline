@@ -415,6 +415,12 @@ const Store = createStore({
                         return buildingToCheck.id === buildingName
                     })[0];
 
+                    // Check Land Size
+                    if(newBuilding.land !== undefined){
+                        const landAvailable = state.landsqkm - state.landUsed;
+                        if (landAvailable < newBuilding.land) return;
+                    }
+
                     // Get the current count
                     const currentBuildingCount = getBuildingCount(state, newBuilding.id);
 
@@ -428,6 +434,9 @@ const Store = createStore({
 
                     // Deduct the cost
                     state = payCosts(realCost, state);
+
+                    // Occupy the land
+                    if(newBuilding.land !== undefined) state.landUsed += newBuilding.land;
 
                     // Actually build the building
                     if(currentBuildingCount > 0){

@@ -18,6 +18,9 @@ function Building(props) {
         <div className={'buildingTooltipWrapper'}>
             <div className={'buildingTooltipDesc'}>{props.data.desc}</div>
             <div className={'buildingTooltipCost'}>
+                {props.data.land &&
+                <div key={'landCost'}>{props.data.land}km²</div>
+                }
                 {realCost.map((cost) => {
                     return <div key={cost.name}>{cost.amount} {cost.name}</div>
                 })}

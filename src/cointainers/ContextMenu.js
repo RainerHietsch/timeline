@@ -83,7 +83,7 @@ function ContextMenu() {
                     })}
                 />
                 <div className={'resourceName'}>Land Size</div>
-                <div className={'resourceAmount'}>{state.landUsed}/{_.round(state.landsqkm,2)}km²</div>
+                <div className={'resourceAmount'}>{_.round(state.landUsed,2)}/{_.round(state.landsqkm,2)}km²</div>
             </div>
             <div className={'resourceLine'}>
                 <div className={'resourceName'}>Border Security</div>
