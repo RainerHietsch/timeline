@@ -1,4 +1,4 @@
-import { useStore } from '../stores/Store';
+import {getLeaderBonusFor, useStore} from '../stores/Store';
 import millify from "millify";
 import {Progress} from "semantic-ui-react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
@@ -18,17 +18,25 @@ function ContextMenu() {
 
         const rateTooltip =
             <div className={'rateTooltipWrapper'}>
+                <div className={'rateTooltipLine'}>
+                    <div>Leader</div>
+                    <div>+{getLeaderBonusFor(state, res.id)}%</div>
+                </div>
                 {res.production.rate.map((rate) => {
                     return rate.absolute
                         ? <div className={'rateTooltipLine'}>
                             <div>{rate.name}</div>
-                            <div>+{rate.amount * (1000/Data.updateInterval)}</div>
+                            <div>+{_.round(rate.amount * (1000/Data.updateInterval),1)}</div>
                         </div>
                         : <div className={'rateTooltipLine'}>
                             <div>{rate.name}</div>
                             <div>+{rate.amount}%</div>
                         </div>
                 })}
+                    <div className={'rateTooltipLine'} style={{borderTop: '1px solid black'}}>
+                        <div>Total:</div>
+                        <div>+{_.round(res.production.perSecond,2)}/s</div>
+                    </div>
             </div>;
 
         return <div className={'resourceLine'}>

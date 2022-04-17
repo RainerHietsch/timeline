@@ -108,17 +108,30 @@ const updateResourceProduction = (state, source) => {
     }
     return state;
 }
+export const getLeaderBonusFor = (state, resId) => {
+    if(state.leader === undefined) return 0;
+    const leaderBonuses = state.leader.bonuses;
+    return _.reduce(leaderBonuses, function(sum, n) {
+        if(n.type === resId+'_production_percent'){
+            return sum + n.value;
+        }
+        return sum;
+    }, 0);
+}
 
-const calculateTotalProductionForResource = (resObj) => {
+const calculateTotalProductionForResource = (state, resObj) => {
     const ratePartitioned = _.partition(resObj.production.rate,{ absolute: true});
 
     const absoluteProduction =  _.reduce(ratePartitioned[0], function(sum, n) {
         return sum + n.amount;
     }, 0);
 
-    const percentageBonus =  _.reduce(ratePartitioned[1], function(sum, n) {
+    let percentageBonus =  _.reduce(ratePartitioned[1], function(sum, n) {
         return sum + n.amount;
     }, 0);
+
+    // check for Leader percentage bonus
+    percentageBonus += getLeaderBonusFor(state, resObj.id)
 
     const percentageToAmount = percentageBonus / 100 * absoluteProduction;
 
@@ -273,6 +286,8 @@ const Store = createStore({
         landUsed: 0,
         maxKnownLands: 3,
         lands: [],
+        leader: undefined,
+        leaderCandidates: []
     },
     // actions that trigger store mutation
     actions: {
@@ -329,7 +344,7 @@ const Store = createStore({
                 ({ setState, getState }) => {
                     let state = getState();
                     for (const [key, value] of Object.entries(state.resources)) {
-                        const rawAmount = calculateTotalProductionForResource(value);
+                        const rawAmount = calculateTotalProductionForResource(state, value);
                         const amount = _.clamp(rawAmount, 0, value.max - value.count);
                         if(!isNaN(amount)) addRes(state, value.id, amount);
                     }

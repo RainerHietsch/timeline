@@ -329,3 +329,62 @@ svg.CircularProgressbar.resourceProgress {
 .cannotAfford{
   color: #df4848;
 }
+
+.candidates {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.leaderCandidate {
+  background: #d7d7d7;
+  padding: 10px;
+  width: 300px;
+  margin-right: 20px;
+  border-radius: 3px;
+  box-shadow: 1px 0px 9px 0px #000000;
+  margin-bottom: 20px;
+  position: relative;
+  min-height: 200px;
+}
+
+.leaderCandidate .name {
+  font-size: 20px;
+}
+
+.leaderCandidate .bonuses {
+  margin-top: 10px;
+}
+
+.firstRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.leaderCandidate .firstRow .power {
+  font-size: 17px;
+  line-height: 23px;
+  background: #c19ea3;
+  text-align: center;
+  padding-top: 5px;
+  border-radius: 15px;
+  width: 30px;
+  box-shadow: 0px 0px 3px 0px #0000004a;
+  height: 30px;
+  cursor: help;
+}
+
+.dividerHeader {
+  color: #bdbdbd;
+  font-size: 20px;
+  border-bottom: 1px solid #727272;
+  margin-bottom: 10px;
+  font-family: 'shentoxlight', sans-serif;
+}
+
+.leaderCandidate button.ui.button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+
