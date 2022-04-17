@@ -6,6 +6,7 @@ import 'tippy.js/themes/light.css';
 import {calculateCost, costMulti1} from "../data/CostMulti";
 import {Data} from "../data/Data";
 import {getBuildingCount} from "../functions/HelperFunctions";
+import millify from "millify";
 
 function Building(props) {
     const [state, actions] = useStore();
@@ -22,7 +23,7 @@ function Building(props) {
                 <div key={'landCost'}>{props.data.land}km²</div>
                 }
                 {realCost.map((cost) => {
-                    return <div key={cost.name}>{cost.amount} {cost.name}</div>
+                    return <div key={cost.name}>{millify(cost.amount)} {cost.name}</div>
                 })}
             </div>
             <div className={'buildingTooltipProduction'}>
@@ -40,6 +41,7 @@ function Building(props) {
             placement={'bottom'}
             offset={[0, 0]}
             allowHTML={true}
+            hideOnClick={false}
             content={tooltip}
         >
             <div className={'buildingWrapper'} onClick={() => {actions.buildBuilding(props.data.id)}}>

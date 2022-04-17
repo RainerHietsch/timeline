@@ -7,7 +7,7 @@ export const Buildings = [
             {id: 'stone', name: 'Stone', amount: 5},
             {id: 'wood', name: 'Wood', amount: 5},
         ],
-        costMultiplier: 1,
+        costMultiplier: 1.3,
         consumes: [],
         produces: [
             {
@@ -28,7 +28,7 @@ export const Buildings = [
             {id: 'stone', name: 'Stone', amount: 5},
             {id: 'wood', name: 'Wood', amount: 5},
         ],
-        costMultiplier: 2,
+        costMultiplier: 1.3,
         consumes: [],
         produces: [
             {
@@ -50,7 +50,7 @@ export const Buildings = [
             {id: 'wood', name: 'Wood', amount: 5},
         ],
         land: 0.12,
-        costMultiplier: 3,
+        costMultiplier: 1.3,
         consumes: [],
         produces: [
             {
@@ -77,7 +77,7 @@ export const Buildings = [
             {id: 'stone', name: 'Stone', amount: 20},
             {id: 'wood', name: 'Wood', amount: 30},
         ],
-        costMultiplier: 2,
+        costMultiplier: 1.3,
         req: ['masonry'],
         consumes: [],
         produces: [],
@@ -92,7 +92,7 @@ export const Buildings = [
             {id: 'stone', name: 'Stone', amount: 10},
             {id: 'wood', name: 'Wood', amount: 20},
         ],
-        costMultiplier: 2,
+        costMultiplier: 1.3,
         req: ['masonry'],
         consumes: [],
         produces: [],
