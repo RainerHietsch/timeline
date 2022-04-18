@@ -7,6 +7,7 @@ import {calculateCost, costMulti1} from "../data/CostMulti";
 import {Data} from "../data/Data";
 import {getBuildingCount} from "../functions/HelperFunctions";
 import millify from "millify";
+import * as HelperFunctions from "../functions/HelperFunctions";
 
 function Building(props) {
     const [state, actions] = useStore();
@@ -28,7 +29,7 @@ function Building(props) {
             </div>
             <div className={'buildingTooltipProduction'}>
                 {props.data.produces.map((res) => {
-                    return <div key={res.name}>{res.rate * (1000/Data.updateInterval)} {res.name} /s</div>
+                    return <div key={res.name}>{res.rate} {res.name} /s</div>
                 })}
             </div>
         </div>;

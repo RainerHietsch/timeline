@@ -12,3 +12,7 @@ export const getMilitaryPower = (state) => {
 export const regenLeaderInfluenceCost = (state) => {
     return state.leaderMinInfluenceCost * state.leaderInfluenceCostMulti
 }
+
+export const getResource = (id, state) => {
+    return state.resources.filter((res) => {return res.id = id})[0];
+}

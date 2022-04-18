@@ -4,8 +4,8 @@ export const Buildings = [
         name: "Stone Quarry",
         cat: "basic resource",
         cost: [
-            {id: 'stone', name: 'Stone', amount: 5},
-            {id: 'wood', name: 'Wood', amount: 5},
+            {id: 'stone', name: 'Stone', amount: 7},
+            {id: 'wood', name: 'Wood', amount: 10},
         ],
         costMultiplier: 1.3,
         consumes: [],
@@ -25,8 +25,8 @@ export const Buildings = [
         name: "Logging Camp",
         cat: "basic resource",
         cost: [
-            {id: 'stone', name: 'Stone', amount: 5},
-            {id: 'wood', name: 'Wood', amount: 5},
+            {id: 'stone', name: 'Stone', amount: 10},
+            {id: 'wood', name: 'Wood', amount: 17},
         ],
         costMultiplier: 1.3,
         consumes: [],
@@ -46,23 +46,23 @@ export const Buildings = [
         name: "Farm",
         cat: "basic resource",
         cost: [
-            {id: 'stone', name: 'Stone', amount: 5},
-            {id: 'wood', name: 'Wood', amount: 5},
+            {id: 'stone', name: 'Stone', amount: 12},
+            {id: 'wood', name: 'Wood', amount: 12},
         ],
-        land: 0.12,
+        land: 0.25,
         costMultiplier: 1.3,
         consumes: [],
         produces: [
             {
                 id: "growth",
                 name: "Growth",
-                rate: 0.25,
+                rate: 1,
                 absolute: true
             },
             {
                 id: "manpower",
                 name: "Manpower",
-                rate: 0.1,
+                rate: 0.5,
                 absolute: true
             }
         ],
@@ -74,28 +74,81 @@ export const Buildings = [
         name: "Basic Hut",
         cat: "population",
         cost: [
-            {id: 'stone', name: 'Stone', amount: 20},
-            {id: 'wood', name: 'Wood', amount: 30},
+            {id: 'stone', name: 'Stone', amount: 8},
+            {id: 'wood', name: 'Wood', amount: 12},
         ],
         costMultiplier: 1.3,
         req: ['masonry'],
         consumes: [],
         produces: [],
         increases: [{id: 'manpower', amount: 5}],
-        desc: "Stores Stuff",
+        desc: "A place to live is the first step for growing your civilisation.",
     },
     {
         id: "storage",
         name: "Storage",
         cat: "storage",
         cost: [
-            {id: 'stone', name: 'Stone', amount: 10},
-            {id: 'wood', name: 'Wood', amount: 20},
+            {id: 'stone', name: 'Stone', amount: 8},
+            {id: 'wood', name: 'Wood', amount: 7},
         ],
         costMultiplier: 1.3,
         req: ['masonry'],
         consumes: [],
         produces: [],
-        desc: "Stores Stuff",
+        desc: "A simple store that increases Wood and Stone storage.",
+    },
+    {
+        id: "library",
+        name: "Library",
+        cat: "storage",
+        cost: [
+            {id: 'stone', name: 'Stone', amount: 15},
+            {id: 'wood', name: 'Wood', amount: 13},
+        ],
+        costMultiplier: 1.3,
+        req: ['writing'],
+        consumes: [],
+        produces: [],
+        increases: [{id: 'science', amount: 5}],
+        desc: "Preserve your discoveries for the generations to come",
+    },
+    {
+        id: "oracle",
+        name: "Oracle",
+        cat: "production",
+        cost: [
+            {id: 'stone', name: 'Stone', amount: 23},
+            {id: 'wood', name: 'Wood', amount: 20},
+        ],
+        costMultiplier: 1.3,
+        req: ['writing'],
+        consumes: [],
+        produces: [{
+            id: "science",
+            name: "Science",
+            rate: 2,
+            absolute: true
+        }],
+        desc: "Produces 2 Science/s",
+    },
+    {
+        id: "cavepaintings",
+        name: "Cave Paintings",
+        cat: ["production","storage"],
+        cost: [
+            {id: 'stone', name: 'Stone', amount: 25},
+            {id: 'wood', name: 'Wood', amount: 20},
+        ],
+        costMultiplier: 1.3,
+        req: ['pigments'],
+        consumes: [],
+        produces: [{
+            id: "influence",
+            name: "Influence",
+            rate: 2,
+            absolute: true
+        }],
+        desc: "Produces 2 Influence/s",
     }
 ]

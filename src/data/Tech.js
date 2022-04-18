@@ -14,7 +14,7 @@ export const Tech = [
             {
                 id: "science",
                 name: "Science",
-                rate: 0.25,
+                rate: 1,
                 absolute: true
             }
         ],
@@ -44,7 +44,7 @@ export const Tech = [
             {
                 id: "influence",
                 name: "Influence",
-                rate: 0.25,
+                rate: 1,
                 absolute: true
             }
         ],
@@ -80,7 +80,7 @@ export const Tech = [
         cost: [
             {id: 'science', name: 'Science', amount: 45},
         ],
-        req: ['irrigation'],
+        req: ['stonetools'],
     },
     {
         id: 'writing',

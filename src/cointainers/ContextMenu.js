@@ -29,7 +29,7 @@ function ContextMenu() {
                     return rate.absolute
                         ? <div className={'rateTooltipLine'}>
                             <div>{rate.name}</div>
-                            <div>+{_.round(rate.amount * (1000/Data.updateInterval),1)}</div>
+                            <div>+{_.round(rate.amount,1)}/s</div>
                         </div>
                         : <div className={'rateTooltipLine'}>
                             <div>{rate.name}</div>

@@ -142,9 +142,9 @@ const calculateTotalProductionForResource = (state, resObj) => {
 
     const totalProduction = absoluteProduction + percentageToAmount;
 
-    resObj.production.perSecond = totalProduction * (1000/Data.updateInterval);
+    resObj.production.perSecond = totalProduction;
 
-    return totalProduction;
+    return totalProduction/(1000/Data.updateInterval);
 }
 
 const generateLand = () => {
