@@ -17,6 +17,7 @@ function VertMenu() {
                         >
                             Buildings
                         </Menu.Item>
+                        {state.finishedTech.includes('tribalculture') &&
                         <Menu.Item
                             name='Leader'
                             active={state.screen === 'leader'}
@@ -24,6 +25,7 @@ function VertMenu() {
                         >
                             Leader
                         </Menu.Item>
+                        }
                     </Menu.Menu>
                 </Menu.Item>
                 <Menu.Item

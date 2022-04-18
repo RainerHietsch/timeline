@@ -80,7 +80,7 @@ export const Tech = [
         cost: [
             {id: 'science', name: 'Science', amount: 45},
         ],
-        req: ['stonetools'],
+        req: ['irrigation'],
     },
     {
         id: 'writing',
@@ -114,6 +114,17 @@ export const Tech = [
             {id: 'science', name: 'Science', amount: 45},
         ],
         req: ['weapons','pigments'],
+    },
+    {
+        id: 'tribalculture',
+        name: 'Tribal Culture',
+        desc: 'Unlocks the Leader Mechanic',
+        era: 'Stone Age',
+        cat: 'Mechanics',
+        cost: [
+            {id: 'science', name: 'Science', amount: 45},
+        ],
+        req: ['writing'],
     },
     {
         id: 'improvedtools',
