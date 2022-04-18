@@ -60,19 +60,6 @@ export const payCosts = (costs, state) => {
     return state;
 }
 
-const updateStorage = (state) => {
-
-    const storageBuildingBonus = state.buildings.filter(building => building.id === 'storage')[0].count * 50 * state.storageLevel;
-
-    state.resources.forEach((res) => {
-        switch (res.id){
-            case "wood": state.resources[getIndex('wood', state.resources)].max = 50 + storageBuildingBonus; break;
-            case "stone": state.resources[getIndex('stone', state.resources)].max = 50 + storageBuildingBonus; break;
-            default: break;
-        }
-    })
-}
-
 const calculateGrowthValues = (state) =>
 {
     const farms = getBuildingCount(state, 'farm');
@@ -406,7 +393,8 @@ const Store = createStore({
                     // Deduct the cost
                     state = payCosts(newTech.cost, state);
 
-                    // Actually reasearch the tech
+                    // Actually research the tech
+                    if(newTech.onFinish) newTech.onFinish(state);
                     state.finishedTech = state.finishedTech.concat(newTech.id);
                     state = getAvailableTechFunction(state)
                     state = updateResourceProduction(state, newTech);
@@ -453,17 +441,9 @@ const Store = createStore({
                             count: 1
                         })
                     }
+                    if(newBuilding.onFinish) newBuilding.onFinish(state);
 
                     state = updateResourceProduction(state, newBuilding);
-
-                    if(newBuilding.increases?.length !== 0){
-                        _.forEach(newBuilding.increases, (res) => {
-                            state.resources[getIndex(res.id, state.resources)].max += res.amount;
-                        });
-                    }
-                    if(newBuilding.cat === 'storage'){
-                        updateStorage(state);
-                    }
 
                     setState({state});
                 },

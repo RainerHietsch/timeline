@@ -73,7 +73,7 @@ export const Tech = [
     },
     {
         id: 'weapons',
-        name: 'Weapons',
+        name: 'Simple Spears',
         desc: 'Unlocks Military',
         era: 'Stone Age',
         cat: 'Military',
@@ -151,4 +151,18 @@ export const Tech = [
             }
         ],
     },
+    {
+        id: 'sharpspears',
+        name: 'Sharper Spears',
+        desc: 'Adds +1 to Infantries\' minimum damage',
+        era: 'Stone Age',
+        cat: 'Military',
+        cost: [
+            {id: 'science', name: 'Science', amount: 45},
+        ],
+        req: ['weapons'],
+        onFinish: (state) => {
+            state.military.infantry.minAttack += 1;
+        }
+    }
 ]

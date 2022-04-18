@@ -1,3 +1,5 @@
+import {getResource} from "../functions/HelperFunctions";
+
 export const Buildings = [
     {
         id: "stonequarry",
@@ -85,7 +87,9 @@ export const Buildings = [
         req: ['masonry'],
         consumes: [],
         produces: [],
-        increases: [{id: 'manpower', amount: 5}],
+        onFinish: (state) => {
+            getResource('manpower', state).max += 5;
+        },
         desc: "A place to live is the first step for growing your civilisation.",
     },
     {
@@ -101,13 +105,18 @@ export const Buildings = [
         req: ['masonry'],
         consumes: [],
         produces: [],
+        onFinish: (state) => {
+            getResource('wood', state).max += 50;
+            getResource('stone', state).max += 50;
+        },
         desc: "A simple store that increases Wood and Stone storage.",
+
     },
     {
         id: "library",
         name: "Library",
-        group: 'Science',
-        cat: "storage",
+        group: 'science',
+        cat: "science",
         cost: [
             {id: 'stone', name: 'Stone', amount: 15},
             {id: 'wood', name: 'Wood', amount: 13},
@@ -116,7 +125,9 @@ export const Buildings = [
         req: ['writing'],
         consumes: [],
         produces: [],
-        increases: [{id: 'science', amount: 5}],
+        onFinish: (state) => {
+            getResource('science', state).max += 5;
+        },
         desc: "Preserve your discoveries for the generations to come",
     },
     {
@@ -157,7 +168,10 @@ export const Buildings = [
             rate: 2,
             absolute: true
         }],
-        increases: [{id: 'influence', amount: 5}],
+        onFinish: (state) => {
+            const res = getResource('influence', state);
+            res.max += 5;
+        },
         desc: "Produces 2 Influence/s",
     }
 ]
