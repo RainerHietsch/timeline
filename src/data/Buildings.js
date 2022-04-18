@@ -2,6 +2,7 @@ export const Buildings = [
     {
         id: "stonequarry",
         name: "Stone Quarry",
+        group: 'resources',
         cat: "basic resource",
         cost: [
             {id: 'stone', name: 'Stone', amount: 7},
@@ -23,6 +24,7 @@ export const Buildings = [
     {
         id: "loggingcamp",
         name: "Logging Camp",
+        group: 'resources',
         cat: "basic resource",
         cost: [
             {id: 'stone', name: 'Stone', amount: 10},
@@ -44,6 +46,7 @@ export const Buildings = [
     {
         id: "farm",
         name: "Farm",
+        group: 'population',
         cat: "basic resource",
         cost: [
             {id: 'stone', name: 'Stone', amount: 12},
@@ -72,6 +75,7 @@ export const Buildings = [
     {
         id: "hut",
         name: "Basic Hut",
+        group: 'population',
         cat: "population",
         cost: [
             {id: 'stone', name: 'Stone', amount: 8},
@@ -87,6 +91,7 @@ export const Buildings = [
     {
         id: "storage",
         name: "Storage",
+        group: 'storage',
         cat: "storage",
         cost: [
             {id: 'stone', name: 'Stone', amount: 8},
@@ -101,6 +106,7 @@ export const Buildings = [
     {
         id: "library",
         name: "Library",
+        group: 'Science',
         cat: "storage",
         cost: [
             {id: 'stone', name: 'Stone', amount: 15},
@@ -116,6 +122,7 @@ export const Buildings = [
     {
         id: "oracle",
         name: "Oracle",
+        group: 'science',
         cat: "production",
         cost: [
             {id: 'stone', name: 'Stone', amount: 23},
@@ -135,6 +142,7 @@ export const Buildings = [
     {
         id: "cavepaintings",
         name: "Cave Paintings",
+        group: 'culture',
         cat: ["production","storage"],
         cost: [
             {id: 'stone', name: 'Stone', amount: 25},
@@ -149,6 +157,7 @@ export const Buildings = [
             rate: 2,
             absolute: true
         }],
+        increases: [{id: 'influence', amount: 5}],
         desc: "Produces 2 Influence/s",
     }
 ]

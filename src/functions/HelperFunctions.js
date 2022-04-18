@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export const getBuildingCount = (state, id) => {
     const buildingStats = state.buildings.filter(building => building.id === id);
     if (buildingStats.length === 0) return 0;
@@ -14,5 +16,17 @@ export const regenLeaderInfluenceCost = (state) => {
 }
 
 export const getResource = (id, state) => {
-    return state.resources.filter((res) => {return res.id = id})[0];
+    return state.resources.filter((res) => {return res.id === id})[0];
+}
+
+export const getLongestTime = (state, costs) => {
+    let longestTime = 0;
+    let never = false;
+    _.forEach(costs, (cost) => {
+       const res = getResource(cost.id, state);
+       if(cost.amount > res.max) never = true;
+       const secondsNeeded = _.round((cost.amount-res.count)/res.production.perSecond);
+        if (secondsNeeded > longestTime) longestTime = secondsNeeded;
+    });
+    return never ? -1 : longestTime;
 }

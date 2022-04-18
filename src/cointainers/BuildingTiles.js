@@ -6,15 +6,23 @@ function BuildingTiles() {
     const [state, actions] = useStore();
 
     let resourceBuildings = Buildings.filter((building) => {
-        return building.cat === 'basic resource' && building.req.every(val => state.finishedTech.includes(val));
+        return building.group === 'resources' && building.req.every(val => state.finishedTech.includes(val));
     });
 
     let storageBuildings = Buildings.filter((building) => {
-        return building.cat === 'storage' && building.req.every(val => state.finishedTech.includes(val));
+        return building.group === 'storage' && building.req.every(val => state.finishedTech.includes(val));
+    });
+
+    let scienceBuildings = Buildings.filter((building) => {
+        return building.group === 'science' && building.req.every(val => state.finishedTech.includes(val));
     });
 
     let populationBuildings = Buildings.filter((building) => {
-        return building.cat === 'population' && building.req.every(val => state.finishedTech.includes(val));
+        return building.group === 'population' && building.req.every(val => state.finishedTech.includes(val));
+    });
+
+    let cultureBuildings = Buildings.filter((building) => {
+        return building.group === 'culture' && building.req.every(val => state.finishedTech.includes(val));
     });
 
     return (
@@ -36,10 +44,26 @@ function BuildingTiles() {
                         })
                     }
                 </div>
+                <div className={'buildingCatName'}>Science</div>
+                <div className={'buildingCatBuildings'}>
+                    {
+                        scienceBuildings.map((building) => {
+                            return <Building key={building.id} data={building}/>
+                        })
+                    }
+                </div>
                 <div className={'buildingCatName'}>Storage</div>
                 <div className={'buildingCatBuildings'}>
                     {
                         storageBuildings.map((building) => {
+                            return <Building key={building.id} data={building}/>
+                        })
+                    }
+                </div>
+                <div className={'buildingCatName'}>Culture</div>
+                <div className={'buildingCatBuildings'}>
+                    {
+                        cultureBuildings.map((building) => {
                             return <Building key={building.id} data={building}/>
                         })
                     }
