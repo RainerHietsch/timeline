@@ -32,6 +32,10 @@ function MilitaryScreen() {
                             }
                             <div>Strength: {HelperFunctions.getMilitaryPower(state)}</div>
                         </div>
+                        <div className={'statLine'}>
+                            <div>Time to Build</div>
+                            <div>{state.military.infantry.secondsToBuild}s</div>
+                        </div>
                         <div className={'statLine'} >
                             <div>Count</div>
                             <div> {
@@ -49,8 +53,8 @@ function MilitaryScreen() {
                         </div>
                         {state.military.infantry.armour > 0 &&
                         <div className={'statLine'}>
-                            <div>Hit Points</div>
-                            <div>{state.military.infantry.maxHp}</div>
+                            <div>Armor</div>
+                            <div>{state.military.infantry.armour}</div>
                         </div>
                         }
                     </div>

@@ -14,6 +14,7 @@ import ExplorationScreen from "./cointainers/ExplorationScreen";
 import SettingsScreen from "./cointainers/SettingsScreen";
 import ProjectsScreen from "./cointainers/ProjectsScreen";
 import LeaderScreen from "./cointainers/LeaderScreen";
+import * as MilitaryFunctions from "./functions/MilitaryFunctions";
 
 function App() {
     const [state, actions] = useStore();
@@ -26,7 +27,7 @@ function App() {
         let intervalId = workerTimers.setInterval(() => {
             actions.produce();
             actions.grow();
-            actions.trainTroops();
+            MilitaryFunctions.trainTroops(state)
             actions.calculations();
         }, Data.updateInterval);
     }, []);

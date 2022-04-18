@@ -164,5 +164,33 @@ export const Tech = [
         onFinish: (state) => {
             state.military.infantry.minAttack += 1;
         }
+    },
+    {
+        id: 'furclothing',
+        name: 'Fur Clothing',
+        desc: 'Adds +5 to Infantries\' hit points',
+        era: 'Stone Age',
+        cat: 'Military',
+        cost: [
+            {id: 'science', name: 'Science', amount: 45},
+        ],
+        req: ['weapons'],
+        onFinish: (state) => {
+            state.military.infantry.maxHp += 5;
+        }
+    },
+    {
+        id: 'warriorculture',
+        name: 'Warrior Culture',
+        desc: 'Infantry units are build 5 seconds faster',
+        era: 'Stone Age',
+        cat: 'Military',
+        cost: [
+            {id: 'science', name: 'Science', amount: 45},
+        ],
+        req: ['weapons'],
+        onFinish: (state) => {
+            state.military.infantry.secondsToBuild -= 5;
+        }
     }
 ]

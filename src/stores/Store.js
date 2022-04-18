@@ -177,7 +177,8 @@ const Store = createStore({
               maxAttack: 4,
               hp:10,
               maxHp: 10,
-              armour: 0
+              armour: 0,
+              secondsToBuild: 45
           },
           cavalry: {
               name: 'Cavalry',
@@ -186,9 +187,10 @@ const Store = createStore({
               currentBuildProgress: 0,
               minAttack: 3,
               maxAttack: 12,
-              hp:30,
+              hp: 30,
               maxHp: 10,
-              armour: 0
+              armour: 0,
+              secondsToBuild: 45,
           },
           artillery: {
               name: 'Artillery',
@@ -199,7 +201,8 @@ const Store = createStore({
               maxAttack: 20,
               hp:15,
               maxHp: 10,
-              armour: 0
+              armour: 0,
+              secondsToBuild: 45
           },
           morale: 0,
           quality: 0
@@ -446,21 +449,6 @@ const Store = createStore({
                     state = updateResourceProduction(state, newBuilding);
 
                     setState({state});
-                },
-        trainTroops:
-            () =>
-                ({ setState, getState }) => {
-                    const state = getState();
-                    const infantry = state.military.infantry;
-
-                    if(infantry.goal > infantry.count){
-                        infantry.currentBuildProgress += 2;
-                        if(infantry.currentBuildProgress >= 100){
-                            infantry.count += 1;
-                            infantry.currentBuildProgress = 0;
-                        }
-                    }
-                    setState(state);
                 },
         explore:
             () =>
