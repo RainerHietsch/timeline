@@ -16,6 +16,7 @@ import {
 import {battle} from "../functions/CombatFunctions";
 import {getBuildingCount} from "../functions/HelperFunctions";
 import {doesPersonDie} from "../data/Leaders";
+import * as MilitaryFunctions from "../functions/MilitaryFunctions";
 
 var randomString = require('random-string');
 const ls = require('local-storage');
@@ -379,6 +380,12 @@ const Store = createStore({
 
                     // Deduct the cost
                     setState(state);
+                },
+        trainTroops:
+            () =>
+                ({ setState, getState }) => {
+                    let state = getState();
+                    MilitaryFunctions.trainTroops(state);
                 },
         researchTech:
             (techName) =>

@@ -8,6 +8,7 @@ const LeaderBonuses = [
     ['stone_production_percent', 100, [[1,5],[6,10],[11,15],[16,20],[21,25]]],
     ['science_production_percent', 50, [[1,5],[6,10],[11,15],[16,20],[21,25]]],
     ['influence_production_percent', 50, [[1,5],[6,10],[11,15],[16,20],[21,25]]],
+    ['infantry_production_speed', 50, [[1,5],[6,10],[11,15],[16,20],[21,25]]],
 ];
 
 export const createLeader = () => {

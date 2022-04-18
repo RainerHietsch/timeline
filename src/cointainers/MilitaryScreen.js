@@ -2,6 +2,7 @@ import { useStore } from '../stores/Store';
 import {Button, ButtonGroup, Icon, Label, Message} from "semantic-ui-react";
 import {buildStyles, CircularProgressbar} from "react-circular-progressbar";
 import * as HelperFunctions from "../functions/HelperFunctions";
+import {getLeaderInfantryProductionSpeedBonus} from "../functions/MilitaryFunctions";
 
 function MilitaryScreen() {
     const [state, actions] = useStore();
@@ -34,7 +35,7 @@ function MilitaryScreen() {
                         </div>
                         <div className={'statLine'}>
                             <div>Time to Build</div>
-                            <div>{state.military.infantry.secondsToBuild}s</div>
+                            <div>{state.military.infantry.secondsToBuild*(100-getLeaderInfantryProductionSpeedBonus(state))/100}s</div>
                         </div>
                         <div className={'statLine'} >
                             <div>Count</div>

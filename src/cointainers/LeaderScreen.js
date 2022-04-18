@@ -6,6 +6,7 @@ import _ from 'lodash';
 import Tippy from "@tippyjs/react";
 import * as HelperFunctions from "../functions/HelperFunctions";
 import * as Leaders from "../data/Leaders";
+import LeaderPerson from "../components/LeaderPerson";
 
 function LeaderScreen() {
     const [state, actions] = useStore();
@@ -33,86 +34,14 @@ function LeaderScreen() {
         payCosts(cost, state);
     }
 
-    const leader = state.leader ? <div className={'leaderCandidate'}>
-            <div className={'firstRow'}>
-                <div className={'name'}>{state.leader.name}</div>
-                <Tippy
-                    delay={500}
-                    theme='light'
-                    arrow={false}
-                    placement={'bottom'}
-                    offset={[0, 0]}
-                    allowHTML={true}
-                    content={'The power of a leader is an indicator of how strong of a leader this person is'}
-                >
-                    <div className={'power'}>{_.reduce(state.leader.bonuses, function(sum, bonus) {
-                        return sum + bonus.tier;
-                    }, 0)}</div>
-                </Tippy>
-            </div>
-            <div>Age: {_.round(state.leader.age)}</div>
-            {state.leaderHealthVisible &&
-            <Tippy
-                theme='light'
-                arrow={false}
-                placement={'bottom'}
-                offset={[0, 0]}
-                allowHTML={true}
-                content={`Chance to die within one hour: ${Leaders.probabilityToDiePerHour(state.leader)}%`}
-            >
-                <div>Health: {_.round(state.leader.health)}%</div>
-            </Tippy>
-            }
-            <div className={'bonuses'}>
-                {state.leader.bonuses.map((bonus) => {
-                    return <div className={'singleBonus'}>
-                        <div>{LeadersLang[bonus.type]} +{bonus.value}%</div>
-                    </div>
-                })}
-            </div>
-        </div> : null;
+    const leader = state.leader ? <LeaderPerson person={state.leader}/> : null;
 
     const candidates = state.leaderCandidates.map((candidate) => {
-        return <div className={'leaderCandidate'}>
-            <div className={'firstRow'}>
-                <div className={'name'}>{candidate.name}</div>
-                <Tippy
-                    delay={500}
-                    theme='light'
-                    arrow={false}
-                    placement={'bottom'}
-                    offset={[0, 0]}
-                    allowHTML={true}
-                    content={'The power of a leader is an indicator of how strong of a leader this person is'}
-                >
-                <div className={'power'}>{_.reduce(candidate.bonuses, function(sum, bonus) {
-                    return sum + bonus.tier;
-                }, 0)}</div>
-                </Tippy>
-            </div>
-            <div>Age: {_.round(candidate.age)}</div>
-            {state.leaderHealthVisible &&
-            <Tippy
-                theme='light'
-                arrow={false}
-                placement={'bottom'}
-                offset={[0, 0]}
-                allowHTML={true}
-                content={`Chance to die within one hour: ${Leaders.probabilityToDiePerHour(candidate)}%`}
-            >
-                <div>Health: {_.round(candidate.health)}%</div>
-            </Tippy>
-            }
-            <div className={'bonuses'}>
-            {candidate.bonuses.map((bonus) => {
-                return <div className={'singleBonus'}>
-                    <div>{LeadersLang[bonus.type]} +{bonus.value}%</div>
-                </div>
-            })}
-            </div>
-
-            <Button onClick={() => {chooseLeader(candidate.id)}}>Promote to Leader</Button>
-        </div>
+        return <LeaderPerson
+            person={candidate}
+            isCandidate
+            chooseLeader={chooseLeader}
+        />
     });
 
     return (

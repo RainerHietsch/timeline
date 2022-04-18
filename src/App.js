@@ -7,14 +7,12 @@ import ResearchScreen from "./cointainers/ResearchScreen";
 import VertMenu from "./cointainers/Menu";
 import ContextMenu from "./cointainers/ContextMenu";
 import {useEffect} from "react";
-import {Button} from "semantic-ui-react";
 import {Data} from "./data/Data";
 import MilitaryScreen from "./cointainers/MilitaryScreen";
 import ExplorationScreen from "./cointainers/ExplorationScreen";
 import SettingsScreen from "./cointainers/SettingsScreen";
 import ProjectsScreen from "./cointainers/ProjectsScreen";
 import LeaderScreen from "./cointainers/LeaderScreen";
-import * as MilitaryFunctions from "./functions/MilitaryFunctions";
 
 function App() {
     const [state, actions] = useStore();
@@ -27,7 +25,7 @@ function App() {
         let intervalId = workerTimers.setInterval(() => {
             actions.produce();
             actions.grow();
-            MilitaryFunctions.trainTroops(state)
+            actions.trainTroops()
             actions.calculations();
         }, Data.updateInterval);
     }, []);
