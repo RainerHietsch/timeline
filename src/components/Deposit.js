@@ -27,8 +27,14 @@ function Deposit(props) {
 
     const tooltip =
         <div>
-            <div>Resources: </div>
-            {tooltipResourceLines}
+            {props.deposit.known ?
+                <div>
+                    <div>Resources: </div>
+                    {tooltipResourceLines}
+                </div>
+                :
+                <div>Not scouted yet!</div>
+            }
         </div>
 
     return (
@@ -40,16 +46,23 @@ function Deposit(props) {
             allowHTML={true}
             content={tooltip}
         >
-            <div className={'depositWrapper'}>
-                {resources}
-                {props.deposit.active &&
-                <Icon.Group size='big'>
-                    <Icon inverted color='grey' name='gem' className={'activeDepositIcon'}/>
-                    <Icon inverted color='grey' loading name='cog' corner='bottom right'/>
-                </Icon.Group>
-                }
-            </div>
+        <div className={'depositWrapper'}>
+            {props.deposit.known ?
+                    <div>
+                        {resources}
+                        {props.deposit.active &&
+                        <Icon.Group size='big'>
+                            <Icon inverted color='grey' name='gem' className={'activeDepositIcon'}/>
+                            <Icon inverted color='grey' loading name='cog' corner='bottom right'/>
+                        </Icon.Group>
+                        }
+                    </div>
+                :
+                <div className={'hiddenDeposit'}></div>
+            }
+        </div>
         </Tippy>
+
     );
 };
 

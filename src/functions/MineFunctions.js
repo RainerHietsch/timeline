@@ -2,7 +2,7 @@ import _ from 'lodash';
 import {Data} from "../data/Data";
 import * as HelperFunctions from "./HelperFunctions";
 
-export const generateDeposit = (state) => {
+export const generateDeposit = (state, known) => {
 
     let randomString = require('random-string');
     const deposits = state.mine.deposits;
@@ -15,13 +15,13 @@ export const generateDeposit = (state) => {
 
     deposits.push({
         id: randomString(20),
+        known,
         active: false,
-        resources: resArray
+        resources: resArray,
     })
 }
 
 const generateResource = () => {
-
     const resource_id = _.random(1,7);
     const amount = _.random(0,Data.res_max*HelperFunctions.getFactorForResource(resource_id))
     const percentage = amount*100/(Data.res_max*HelperFunctions.getFactorForResource(resource_id));

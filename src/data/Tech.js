@@ -207,7 +207,8 @@ export const Tech = [
         req: [],
         onFinish: (state) => {
             for(let i=0;i<50;i++){
-                MineFunctions.generateDeposit(state)
+                const known = i % 7 < 3;
+                MineFunctions.generateDeposit(state, known);
             }
         }
     }
