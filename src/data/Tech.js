@@ -1,3 +1,5 @@
+import * as MineFunctions from "../functions/MineFunctions";
+
 export const Tech = [
     {
         id: 'fire',
@@ -191,6 +193,22 @@ export const Tech = [
         req: ['weapons'],
         onFinish: (state) => {
             state.military.infantry.secondsToBuild -= 5;
+        }
+    },
+    {
+        id: 'mining',
+        name: 'Mining',
+        desc: 'Dig for treasure!',
+        era: 'Classical',
+        cat: 'Economy',
+        cost: [
+            {id: 'science', name: 'Science', amount: 45},
+        ],
+        req: [],
+        onFinish: (state) => {
+            for(let i=0;i<50;i++){
+                MineFunctions.generateDeposit(state)
+            }
         }
     }
 ]

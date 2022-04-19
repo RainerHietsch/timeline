@@ -17,6 +17,13 @@ function VertMenu() {
                         >
                             Buildings
                         </Menu.Item>
+                        <Menu.Item
+                            name='Mine'
+                            active={state.screen === 'mine'}
+                            onClick={() => actions.changeScreen('mine')}
+                        >
+                            Mine
+                        </Menu.Item>
                         {state.finishedTech.includes('tribalculture') &&
                         <Menu.Item
                             name='Leader'

@@ -5,3 +5,14 @@ export const LeadersLang = {
     'influence_production_percent': 'Influence Generation',
     'infantry_production_speed': 'Increase Infantry Production Speed'
 }
+
+export const MineResourcesLang = [
+    'ERROR',
+    'Iron',
+    'Copper',
+    'Tin',
+    'Coal',
+    'Gold',
+    'Lithium',
+    'Uranium',
+]

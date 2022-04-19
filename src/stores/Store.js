@@ -284,7 +284,12 @@ const Store = createStore({
         leaderMinInfluenceCost: 10,
         leaderInfluenceCostMulti: 1,
         leaderInfluenceCostDecayPerSecond: 0.1,
-        leaderHealthVisible: true
+        leaderHealthVisible: true,
+
+        // Mine
+        mine: {
+            deposits: []
+        }
     },
     // actions that trigger store mutation
     actions: {

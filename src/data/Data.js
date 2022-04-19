@@ -13,5 +13,8 @@ export const Data = {
                 {id: 'manpower', name: 'Manpower', amount: 5}
             ],
         }
-    }
+    },
+
+    // Mine
+    res_max: 200
 }

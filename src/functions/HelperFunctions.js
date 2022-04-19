@@ -30,3 +30,7 @@ export const getLongestTime = (state, costs) => {
     });
     return never ? -1 : longestTime;
 }
+
+export const getFactorForResource = (resourceId) => {
+    return (-0.15 * Math.pow(resourceId, 2)) + 10;
+}
