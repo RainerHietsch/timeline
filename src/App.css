@@ -414,7 +414,6 @@ svg.CircularProgressbar.resourceProgress {
   background-color: #292121;
   background-image: url(../public/img/cave_bg.png);
   background-size: 101%;
-  background-blend-mode: exclusion;
   width: 100px;
   height: 50px;
   overflow: hidden;

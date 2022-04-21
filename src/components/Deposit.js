@@ -1,4 +1,4 @@
-import { useStore } from '../stores/Store';
+import {getIndex, useStore} from '../stores/Store';
 import {Divider, Icon} from "semantic-ui-react";
 import seedrandom from "seedrandom";
 import _ from 'lodash';
@@ -25,6 +25,26 @@ function Deposit(props) {
         return <div>{Lang.MineResourcesLang[res.resource_id]}: {_.round(res.amount)}</div>;
     });
 
+    const canRevealDeposit = () => {
+        const index = getIndex(props.deposit.id, state.mine.deposits);
+        if([0,1,2].includes(index%7)) return true;
+        return state.mine.deposits[index-1].known === true
+    }
+
+    const revealDeposit = () => {
+        if(!canRevealDeposit()) return;
+        state.mine.deposits.filter((deposit) => {
+            return deposit.id === props.deposit.id;
+        })[0].known = true;
+    }
+
+    const activateDeposit = () => {
+        if(props.deposit.active) return;
+        state.mine.deposits.filter((deposit) => {
+            return deposit.id === props.deposit.id;
+        })[0].active = true;
+    }
+
     const tooltip =
         <div>
             {props.deposit.known ?
@@ -33,7 +53,9 @@ function Deposit(props) {
                     {tooltipResourceLines}
                 </div>
                 :
-                <div>Not scouted yet!</div>
+                canRevealDeposit() ?
+                    <div>Reveal!</div> :
+                    <div>Can't reveal!</div>
             }
         </div>
 
@@ -46,7 +68,11 @@ function Deposit(props) {
             allowHTML={true}
             content={tooltip}
         >
-        <div className={'depositWrapper'}>
+        <div
+            className={'depositWrapper'}
+            onClick={() => {props.deposit.known ? activateDeposit() : revealDeposit()}}
+            style={{backgroundBlendMode: props.deposit.known ? 'overlay' : 'exclusion'}}
+        >
             {props.deposit.known ?
                     <div>
                         {resources}
@@ -55,10 +81,10 @@ function Deposit(props) {
                             <Icon inverted color='grey' name='gem' className={'activeDepositIcon'}/>
                             <Icon inverted color='grey' loading name='cog' corner='bottom right'/>
                         </Icon.Group>
-                        }
+                        }-
                     </div>
                 :
-                <div className={'hiddenDeposit'}></div>
+                <div className={'hiddenDeposit'}/>
             }
         </div>
         </Tippy>
