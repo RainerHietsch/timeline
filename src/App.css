@@ -443,37 +443,37 @@ svg.CircularProgressbar.resourceProgress {
   border-top-right-radius: 3px;
 }
 
-.resId1 {
+.resIdIron {
   background: linear-gradient(-45deg, #985547, #894d40, #ac6050, #b67163);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.resId2 {
+.resIdCopper {
   background: linear-gradient(-45deg, #C1A867, #cdb985, #c7b176, #b89c52);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.resId3 {
+.resIdTin {
   background: linear-gradient(-45deg, #9fc167, #92b852, #b2cd85, #a9c776);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.resId4 {
+.resIdCoal {
   background: linear-gradient(-45deg, #b15999, #b96aa3, #a34d8b, #c17aad);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.resId5 {
+.resIdGold {
   background: linear-gradient(-45deg, #6781c1, #859acd, #5270b8, #768ec7);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.resId6 {
+.resIdUranium {
   background: linear-gradient(-45deg, #67c19a, #85cdae, #76c7a4, #52b88c);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;

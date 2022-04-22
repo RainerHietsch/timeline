@@ -6,13 +6,11 @@ export const LeadersLang = {
     'infantry_production_speed': 'Increase Infantry Production Speed'
 }
 
-export const MineResourcesLang = [
-    'ERROR',
-    'Iron',
-    'Copper',
-    'Tin',
-    'Coal',
-    'Gold',
-    'Lithium',
-    'Uranium',
-]
+export const MineResourcesLang = {
+    'Iron': 'Iron',
+    'Copper': 'Copper',
+    'Tin': 'Tin',
+    'Coal': 'Coal',
+    'Gold': 'Gold',
+    'Uranium': 'Uranium',
+}

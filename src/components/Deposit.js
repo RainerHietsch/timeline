@@ -81,7 +81,7 @@ function Deposit(props) {
                             <Icon inverted color='grey' name='gem' className={'activeDepositIcon'}/>
                             <Icon inverted color='grey' loading name='cog' corner='bottom right'/>
                         </Icon.Group>
-                        }-
+                        }
                     </div>
                 :
                 <div className={'hiddenDeposit'}/>

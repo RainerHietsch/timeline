@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {Data} from "../data/Data";
 
 export const getBuildingCount = (state, id) => {
     const buildingStats = state.buildings.filter(building => building.id === id);
@@ -32,5 +33,8 @@ export const getLongestTime = (state, costs) => {
 }
 
 export const getFactorForResource = (resourceId) => {
-    return (-0.15 * Math.pow(resourceId, 2)) + 10;
+
+
+
+    return (-0.15 * Math.pow(Data.resFactor[resourceId], 2)) + 10;
 }

@@ -22,7 +22,7 @@ export const generateDeposit = (state, known) => {
 }
 
 const generateResource = () => {
-    const resource_id = _.random(1,7);
+    const resource_id = _.sample(Data.resIds);
     const amount = _.random(0,Data.res_max*HelperFunctions.getFactorForResource(resource_id))
     const percentage = amount*100/(Data.res_max*HelperFunctions.getFactorForResource(resource_id));
 
