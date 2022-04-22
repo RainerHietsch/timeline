@@ -2,6 +2,7 @@ import {canAfford, getIndex, payCosts, useStore} from '../stores/Store';
 import {Button, Divider} from "semantic-ui-react";
 import Deposit from "../components/Deposit";
 import _ from 'lodash';
+import * as MineFunctions from "../functions/MineFunctions";
 
 function LeaderScreen() {
     const [state, actions] = useStore();
@@ -11,7 +12,10 @@ function LeaderScreen() {
     })
 
     const newLevel = () => {
-        return true;
+        for(let i=0;i<7;i++){
+            const known = i % 7 < 3;
+            MineFunctions.generateDeposit(state, known);
+        }
     }
 
     return (
