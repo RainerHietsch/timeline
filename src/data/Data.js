@@ -1,6 +1,6 @@
 export const Data = {
     freeCosts: true,
-    updateInterval: 250,
+    updateInterval: 16,
     growthPowerMultiplier: 1.2,
 
     // Leaders
