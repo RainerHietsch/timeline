@@ -38,6 +38,7 @@ function LeaderScreen() {
 
     const candidates = state.leaderCandidates.map((candidate) => {
         return <LeaderPerson
+            key={candidate.name}
             person={candidate}
             isCandidate
             chooseLeader={chooseLeader}

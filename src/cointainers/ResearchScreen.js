@@ -6,7 +6,7 @@ function ResearchScreen() {
 
     const availableTech = state.availableTech.map((tech) =>
     {
-        return <TechTile techInfo={tech}/>
+        return <TechTile techInfo={tech} key={tech.id}/>
     })
 
     return (

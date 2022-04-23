@@ -4,6 +4,7 @@ import _ from "lodash";
 import * as Leaders from "../data/Leaders";
 import {LeadersLang} from "../data/Lang";
 import {Button} from "semantic-ui-react";
+import * as randomString from "random-string";
 
 function LeaderPerson(props) {
     const [state, actions] = useStore();
@@ -41,7 +42,7 @@ function LeaderPerson(props) {
             }
             <div className={'bonuses'}>
                 {props.person.bonuses.map((bonus) => {
-                    return <div className={'singleBonus'}>
+                    return <div className={'singleBonus'} key={randomString(5)}>
                         <div>{LeadersLang[bonus.type]} +{bonus.value}%</div>
                     </div>
                 })}

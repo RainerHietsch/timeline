@@ -11,7 +11,7 @@ function TechTile(props) {
             <div className={'techCost'}>
             {
                 props.techInfo.cost.map((singleResCost) => {
-                    return <div>{singleResCost.name}: {singleResCost.amount}</div>
+                    return <div key={singleResCost.name}>{singleResCost.name}: {singleResCost.amount}</div>
                 })
             }
             </div>

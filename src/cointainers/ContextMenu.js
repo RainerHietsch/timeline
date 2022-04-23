@@ -10,6 +10,7 @@ import Tippy from "@tippyjs/react";
 import _ from 'lodash';
 import * as HelperFunctions from "../functions/HelperFunctions";
 import * as LandFunctions from "../functions/LandFunctions";
+import * as randomString from "random-string";
 
 function ContextMenu() {
     const [state, actions] = useStore();
@@ -26,15 +27,10 @@ function ContextMenu() {
                     <div>+{getLeaderBonusFor(state, res.id)}%</div>
                 </div>
                 {res.production.rate.map((rate) => {
-                    return rate.absolute
-                        ? <div className={'rateTooltipLine'}>
-                            <div>{rate.name}</div>
-                            <div>+{_.round(rate.amount,1)}/s</div>
-                        </div>
-                        : <div className={'rateTooltipLine'}>
-                            <div>{rate.name}</div>
-                            <div>+{rate.amount}%</div>
-                        </div>
+                    return <div key={`${randomString()}TTLine`} className={'rateTooltipLine'}>
+                        <div>{rate.name}</div>
+                        <div>+{_.round(rate.amount,1)}{rate.absolute ? '/s' : '%'}</div>
+                    </div>
                 })}
                     <div className={'rateTooltipLine'} style={{borderTop: '1px solid black'}}>
                         <div>Total:</div>
@@ -50,8 +46,9 @@ function ContextMenu() {
                     </div>
             </div>;
 
-        return <div className={'resourceLine'}>
+        return <div key={`${res.name}Line`} className={'resourceLine'}>
             <CircularProgressbar
+                key={`${res.name}Progress`}
                 value={percentage*100}
                 className={'resourceProgress'}
                 strokeWidth={50}
@@ -60,8 +57,8 @@ function ContextMenu() {
                     pathColor: scale(percentage).hex()
                 })}
             />
-            <div className={'resourceName'}>{res.name}</div>
-            <div className={'resourceAmount'}>{millify(Math.round(res.count), {precision: 2, lowercase: true})}/{res.max}</div>
+            <div className={'resourceName'} key={res.name}>{res.name}</div>
+            <div className={'resourceAmount'} key={`${res.name}Amount`}>{millify(Math.round(res.count), {precision: 2, lowercase: true})}/{res.max}</div>
             <Tippy
                 theme='light'
                 arrow={false}
@@ -70,7 +67,7 @@ function ContextMenu() {
                 allowHTML={true}
                 content={rateTooltip}
             >
-                <div className={'resourceRate'}>{Math.round(res.production.perSecond)}/s</div>
+                <div className={'resourceRate'} key={`${res.name}Rate`}>{Math.round(res.production.perSecond)}/s</div>
             </Tippy>
         </div>
     });
