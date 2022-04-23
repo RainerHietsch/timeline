@@ -41,7 +41,7 @@ function ExplorationScreen() {
 
         const claimTooltip = <div>Claim land for <b>{singleLand.influenceCost}</b> Influence</div>
 
-        return <div key={randomString(5)} className={'singleLandWrapper'}>
+        return <div key={singleLand.id} className={'singleLandWrapper'}>
             <Button
                 onClick={() => {actions.dismissLand(singleLand.id)}}
                 icon
