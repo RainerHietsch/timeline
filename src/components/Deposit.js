@@ -70,7 +70,7 @@ function Deposit(props) {
         >
         <div
             className={'depositWrapper'}
-            onClick={() => {props.deposit.known ? activateDeposit() : revealDeposit()}}
+            onMouseDown={() => {props.deposit.known ? activateDeposit() : revealDeposit()}}
             style={{backgroundBlendMode: props.deposit.known ? 'overlay' : 'exclusion'}}
         >
             {props.deposit.known ?
