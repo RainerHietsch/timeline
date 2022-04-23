@@ -28,7 +28,6 @@ function App() {
             actions.grow();
             actions.trainTroops()
             actions.calculations();
-            actions.save();
         }, Data.updateInterval);
     }, []);
 
