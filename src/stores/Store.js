@@ -159,7 +159,7 @@ const generateLand = () => {
 const Store = createStore({
     // value of the store on initialisation
     initialState: {
-        counter: 0,
+        counter: true,
         screen: 'civic',
         currentAge: 'Stone Age',
         finishedTech: ['nothing'],
@@ -300,8 +300,7 @@ const Store = createStore({
             (res) =>
                 ({ setState, getState }) => {
                     let state = getState();
-                    state = addRes(state, res, 1);
-                    setState(state);
+                    addRes(state, res, 1);
                 },
 
         save:
@@ -353,20 +352,18 @@ const Store = createStore({
                         const amount = _.clamp(rawAmount, 0, value.max - value.count);
                         if(!isNaN(amount)) addRes(state, value.id, amount);
                     }
-                    setState({counter: getState().counter + 1});
+                    setState({counter: !getState().counter});
             },
         changeScreen:
             (screen) =>
                 ({ setState, getState }) => {
                     const state = getState().screen = screen;
-                    setState(state);
                 },
         getAvailableTech:
             () =>
                 ({ setState, getState }) => {
                     let state = getState();
                     setState(getAvailableTechFunction(state));
-                    setState(state);
                 },
         addMilitaryGoal:
             (type) =>
@@ -384,10 +381,7 @@ const Store = createStore({
 
                     state.military[type].goal += 1;
 
-                    state = payCosts(cost, state);
-
-                    // Deduct the cost
-                    setState(state);
+                    payCosts(cost, state);
                 },
         trainTroops:
             () =>
@@ -416,7 +410,6 @@ const Store = createStore({
                     state.finishedTech = state.finishedTech.concat(newTech.id);
                     state = getAvailableTechFunction(state)
                     state = updateResourceProduction(state, newTech);
-                    setState(state);
                 },
         buildBuilding:
             (buildingName) =>
@@ -463,7 +456,6 @@ const Store = createStore({
 
                     state = updateResourceProduction(state, newBuilding);
 
-                    setState(state);
                 },
         explore:
             () =>
@@ -482,16 +474,15 @@ const Store = createStore({
 
                     const land = generateLand();
                     state.lands.push(land);
-                    setState(state);
                 },
         dismissLand:
             (id) =>
                 ({ setState, getState }) => {
+                    console.log(1);
                     const state = getState();
                     _.remove(state.lands, (n) => {
                         return n.id === id;
                     });
-                    setState(state);
                 },
         calculations:
             () =>  ({ setState, getState }) => {
@@ -564,7 +555,6 @@ const Store = createStore({
                     _.remove(state.lands, (n) => {
                         return n.id === landObj.id;
                     });
-                    setState(state);
                 }
     },
     // optional, mostly used for easy debugging
