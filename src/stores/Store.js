@@ -17,6 +17,7 @@ import {battle} from "../functions/CombatFunctions";
 import {getBuildingCount} from "../functions/HelperFunctions";
 import {doesPersonDie} from "../data/Leaders";
 import * as MilitaryFunctions from "../functions/MilitaryFunctions";
+import * as HelperFunctions from "../functions/HelperFunctions";
 
 var randomString = require('random-string');
 const ls = require('local-storage');
@@ -287,6 +288,7 @@ const Store = createStore({
         leaderHealthVisible: true,
 
         // Mine
+        maxResourcesPerDeposit: 2,
         mine: {
             deposits: []
         }
@@ -562,7 +564,7 @@ const Store = createStore({
                         return n.id === landObj.id;
                     });
                     setState(state);
-                },
+                }
     },
     // optional, mostly used for easy debugging
     name: 'counter',

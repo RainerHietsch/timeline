@@ -16,7 +16,7 @@ export const Data = {
     },
 
     // Mine
-    res_max: 200,
+    res_max: 2,
     resIds: ['Iron', 'Copper', 'Tin', 'Coal', 'Gold', 'Uranium'],
     resFactor: {
         'Iron': 1,

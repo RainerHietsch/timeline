@@ -13,7 +13,7 @@ function LeaderScreen() {
 
     const newLevel = () => {
         for(let i=0;i<7;i++){
-            const known = i % 7 < 3;
+            const known = i % 7 < 2;
             MineFunctions.generateDeposit(state, known);
         }
     }

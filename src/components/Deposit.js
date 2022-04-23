@@ -22,7 +22,7 @@ function Deposit(props) {
     })
 
     const tooltipResourceLines = _.orderBy(props.deposit.resources,['percentage'],['desc']).map((res) => {
-        return <div>{Lang.MineResourcesLang[res.resource_id]}: {_.round(res.amount)}</div>;
+        return <div key={res.key}>{Lang.MineResourcesLang[res.resource_id]}: {_.round(res.amount)}/s</div>;
     });
 
     const canRevealDeposit = () => {
@@ -33,9 +33,8 @@ function Deposit(props) {
 
     const revealDeposit = () => {
         if(!canRevealDeposit()) return;
-        state.mine.deposits.filter((deposit) => {
-            return deposit.id === props.deposit.id;
-        })[0].known = true;
+        const index = getIndex(props.deposit.id, state.mine.deposits);
+        state.mine.deposits[index].known = true;
     }
 
     const activateDeposit = () => {
