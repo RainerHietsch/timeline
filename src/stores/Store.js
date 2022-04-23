@@ -159,6 +159,7 @@ const generateLand = () => {
 const Store = createStore({
     // value of the store on initialisation
     initialState: {
+        counter: 0,
         screen: 'civic',
         currentAge: 'Stone Age',
         finishedTech: ['nothing'],
@@ -300,7 +301,7 @@ const Store = createStore({
                 ({ setState, getState }) => {
                     let state = getState();
                     state = addRes(state, res, 1);
-                    setState({state});
+                    setState(state);
                 },
 
         save:
@@ -352,13 +353,13 @@ const Store = createStore({
                         const amount = _.clamp(rawAmount, 0, value.max - value.count);
                         if(!isNaN(amount)) addRes(state, value.id, amount);
                     }
-                    setState({state});
+                    setState({counter: getState().counter + 1});
             },
         changeScreen:
             (screen) =>
                 ({ setState, getState }) => {
                     const state = getState().screen = screen;
-                    setState({state});
+                    setState(state);
                 },
         getAvailableTech:
             () =>
@@ -415,7 +416,7 @@ const Store = createStore({
                     state.finishedTech = state.finishedTech.concat(newTech.id);
                     state = getAvailableTechFunction(state)
                     state = updateResourceProduction(state, newTech);
-                    setState({state});
+                    setState(state);
                 },
         buildBuilding:
             (buildingName) =>
@@ -462,7 +463,7 @@ const Store = createStore({
 
                     state = updateResourceProduction(state, newBuilding);
 
-                    setState({state});
+                    setState(state);
                 },
         explore:
             () =>
