@@ -17,16 +17,19 @@ import {battle} from "../functions/CombatFunctions";
 import {getBuildingCount} from "../functions/HelperFunctions";
 import {doesPersonDie} from "../data/Leaders";
 import * as MilitaryFunctions from "../functions/MilitaryFunctions";
-import * as HelperFunctions from "../functions/HelperFunctions";
+import * as FactoryFunctions from "../functions/FactoryFunctions";
 
 var randomString = require('random-string');
 const ls = require('local-storage');
 
 // FUNCTIONS
-
-const addRes = (state, res, amount) => {
+export const addRes = (state, res, rawAmount) => {
     const index = state.resources.findIndex((obj => obj.id === res));
-    state.resources[index].count = state.resources[index].count + amount;
+    const resource =  state.resources[index];
+    const amount = _.clamp(rawAmount, 0, resource.max - resource.count);
+    resource.count = state.resources[index].count + amount;
+
+
 }
 
 export const getIndex = (needle, haystack) => {
@@ -41,8 +44,8 @@ const getAvailableTechFunction = (state) => {
     return state;
 }
 
-export const canAfford = (costs, state) => {
-    if (Data.freeCosts) return true;
+export const canAfford = (costs, state, override = false) => {
+    if (!override && Data.freeCosts) return true;
     let canAfford = true;
     costs.every((singleResCost) => {
         const index = getIndex(singleResCost.id, state.resources);
@@ -55,9 +58,9 @@ export const canAfford = (costs, state) => {
     return canAfford;
 }
 
-export const payCosts = (costs, state) => {
+export const payCosts = (costs, state, override = false) => {
     costs.forEach((singleResCost) => {
-        state.resources[getIndex(singleResCost.id, state.resources)].count -=  Data.freeCosts ? 0 : singleResCost.amount;
+        state.resources[getIndex(singleResCost.id, state.resources)].count -=  Data.freeCosts && !override ? 0 : singleResCost.amount;
     });
     return state;
 }
@@ -271,6 +274,78 @@ const Store = createStore({
                   perSecond: 0
               }
           },
+            {
+                id:'iron',
+                name: 'Iron',
+                count: 0,
+                max: 50,
+                production: {
+                    buildings: [],
+                    tech: [],
+                    rate: [],
+                    perSecond: 0
+                }
+            },
+            {
+                id:'copper',
+                name: 'Copper',
+                count: 0,
+                max: 50,
+                production: {
+                    buildings: [],
+                    tech: [],
+                    rate: [],
+                    perSecond: 0
+                }
+            },
+            {
+                id:'tin',
+                name: 'Tin',
+                count: 0,
+                max: 50,
+                production: {
+                    buildings: [],
+                    tech: [],
+                    rate: [],
+                    perSecond: 0
+                }
+            },
+            {
+                id:'coal',
+                name: 'Coal',
+                count: 0,
+                max: 50,
+                production: {
+                    buildings: [],
+                    tech: [],
+                    rate: [],
+                    perSecond: 0
+                }
+            },
+            {
+                id:'gold',
+                name: 'Gold',
+                count: 0,
+                max: 50,
+                production: {
+                    buildings: [],
+                    tech: [],
+                    rate: [],
+                    perSecond: 0
+                }
+            },
+            {
+                id:'uranium',
+                name: 'Uranium',
+                count: 0,
+                max: 50,
+                production: {
+                    buildings: [],
+                    tech: [],
+                    rate: [],
+                    perSecond: 0
+                }
+            },
         ],
         // BUILDINGS
         buildings: [],
@@ -292,7 +367,32 @@ const Store = createStore({
         maxResourcesPerDeposit: 2,
         mine: {
             deposits: []
-        }
+        },
+
+        // Factories
+        factories: [{
+            id: 'asdsdf2123',
+            active: true,
+            producing: false,
+            speed: 1,
+            currentProduction: 0,
+            blueprint: {
+                name: 'Ancient Science',
+                input: [{
+                    id: 'wood',
+                    amount: 10
+                },
+                {
+                    id: 'stone',
+                    amount: 15
+                }],
+                output: [{
+                    id: 'science',
+                    amount: 5
+                }],
+                secondsToProduce: 5
+            }
+        }]
     },
     // actions that trigger store mutation
     actions: {
@@ -349,9 +449,12 @@ const Store = createStore({
                     let state = getState();
                     for (const [key, value] of Object.entries(state.resources)) {
                         const rawAmount = calculateTotalProductionForResource(state, value);
-                        const amount = _.clamp(rawAmount, 0, value.max - value.count);
-                        if(!isNaN(amount)) addRes(state, value.id, amount);
+                        if(!isNaN(rawAmount)) addRes(state, value.id, rawAmount);
                     }
+
+                    FactoryFunctions.produce(state);
+
+                    //this triggers the re-render
                     setState({counter: !getState().counter});
             },
         changeScreen:

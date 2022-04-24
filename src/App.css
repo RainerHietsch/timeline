@@ -443,37 +443,37 @@ svg.CircularProgressbar.resourceProgress {
   border-top-right-radius: 3px;
 }
 
-.resIdIron {
+.resIdiron {
   background: linear-gradient(-45deg, #985547, #894d40, #ac6050, #b67163);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.resIdCopper {
+.resIdcopper {
   background: linear-gradient(-45deg, #C1A867, #cdb985, #c7b176, #b89c52);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.resIdTin {
+.resIdtin {
   background: linear-gradient(-45deg, #9fc167, #92b852, #b2cd85, #a9c776);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.resIdCoal {
+.resIdcoal {
   background: linear-gradient(-45deg, #b15999, #b96aa3, #a34d8b, #c17aad);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.resIdGold {
+.resIdgold {
   background: linear-gradient(-45deg, #6781c1, #859acd, #5270b8, #768ec7);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 
-.resIdUranium {
+.resIduranium {
   background: linear-gradient(-45deg, #67c19a, #85cdae, #76c7a4, #52b88c);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
@@ -518,5 +518,30 @@ svg.CircularProgressbar.resourceProgress {
     background-position: 0% 50%;
   }
 }
+
+.factoryWrapper {
+  background: #b3b3b3;
+  width: 250px;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 0 13px 0px #000000ad;
+}
+
+.blueprintName {
+  text-align: center;
+  border-bottom: 1px solid #0000002b;
+  margin-bottom: 10px;
+}
+
+.inputRow {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.inputWrapper {
+  width: 50%;
+  margin: 0 auto;
+}
+
 
 

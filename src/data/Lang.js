@@ -7,10 +7,13 @@ export const LeadersLang = {
 }
 
 export const MineResourcesLang = {
-    'Iron': 'Iron',
-    'Copper': 'Copper',
-    'Tin': 'Tin',
-    'Coal': 'Coal',
-    'Gold': 'Gold',
-    'Uranium': 'Uranium',
+    'science': 'Science',
+    'wood': 'Wood',
+    'stone': 'Stone',
+    'iron': 'Iron',
+    'copper': 'Copper',
+    'tin': 'Tin',
+    'coal': 'Coal',
+    'gold': 'Gold',
+    'uranium': 'Uranium',
 }

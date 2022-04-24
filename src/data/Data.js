@@ -1,5 +1,7 @@
 export const Data = {
     freeCosts: true,
+    freeFactories: true,
+
     updateInterval: 16,
     growthPowerMultiplier: 1.2,
 
@@ -17,13 +19,13 @@ export const Data = {
 
     // Mine
     res_max: 2,
-    resIds: ['Iron', 'Copper', 'Tin', 'Coal', 'Gold', 'Uranium'],
+    resIds: ['iron', 'copper', 'tin', 'coal', 'gold', 'uranium'],
     resFactor: {
-        'Iron': 1,
-        'Copper': 2,
-        'Tin': 3,
-        'Coal': 4,
-        'Gold': 5,
-        'Uranium': 6
+        'iron': 1,
+        'copper': 2,
+        'tin': 3,
+        'coal': 4,
+        'gold': 5,
+        'uranium': 6
     }
 }

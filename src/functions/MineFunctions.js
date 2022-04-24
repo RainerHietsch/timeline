@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {Data} from "../data/Data";
 import * as HelperFunctions from "./HelperFunctions";
+import * as Store from "../stores/Store";
 
 export const generateDeposit = (state, known) => {
 
@@ -29,4 +30,17 @@ const generateResource = () => {
     const percentage = amount*100/(Data.res_max*HelperFunctions.getFactorForResource(resource_id));
 
     return {resource_id, amount, percentage, key}
+}
+
+export const produce = (state) => {
+
+    // get active deposits
+    const activeDeposits = state.mine.deposits.filter((deposit) => {return deposit.active});
+    // loop and add resources
+    _.forEach(activeDeposits, (deposit) => {
+        _.forEach(deposit.resources, (res) => {
+           Store.addRes(state, res.resource_id, res.amount/(1000/Data.updateInterval));
+        })
+    });
+
 }

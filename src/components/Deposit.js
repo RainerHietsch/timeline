@@ -6,6 +6,7 @@ import {Data} from "../data/Data";
 import * as HelperFunctions from "../functions/HelperFunctions";
 import Tippy from "@tippyjs/react";
 import * as Lang from "../data/Lang";
+import * as Store from "../stores/Store";
 
 function Deposit(props) {
     const [state, actions] = useStore();
@@ -38,10 +39,25 @@ function Deposit(props) {
     }
 
     const activateDeposit = () => {
+        // if already active, do nothing
         if(props.deposit.active) return;
+
+        // TODO: check affordability
+
+        // switch to active
         state.mine.deposits.filter((deposit) => {
             return deposit.id === props.deposit.id;
         })[0].active = true;
+
+        // add resource production
+        _.forEach(props.deposit.resources, (res) => {
+            const stateRes = state.resources[getIndex(res.resource_id, state.resources)];
+            stateRes.production.rate.push({
+                name: 'Mine',
+                amount: res.amount,
+                absolute: true,
+            })
+        })
     }
 
     const tooltip =

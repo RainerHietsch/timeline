@@ -35,6 +35,19 @@ function VertMenu() {
                         }
                     </Menu.Menu>
                 </Menu.Item>
+                <Menu.Item>
+                    <Icon name='grid layout' />
+                    Production
+                    <Menu.Menu>
+                        <Menu.Item
+                            name='Production'
+                            active={state.screen === 'production'}
+                            onClick={() => actions.changeScreen('production')}
+                        >
+                            Crafting
+                        </Menu.Item>
+                    </Menu.Menu>
+                </Menu.Item>
                 <Menu.Item
                     name='browse'
                     active={state.screen === 'research'}
