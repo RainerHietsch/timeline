@@ -29,13 +29,19 @@ function Factory(props) {
                 <div>{props.factory.blueprint.name}</div>
                 <Line percent={props.factory.currentProduction} strokeWidth="4" strokeColor="#42d231" />
             </div>
-            <div className={'inputWrapper'}>{input}</div>
+            <div
+                className={'inputWrapper'}
+                style={{backgroundColor: props.factory.inputBlocked ? '#ff00001c' : 'none'}}
+            >{input}</div>
             <Divider horizontal>
                 <Header as='h4'>
                     <Icon name={props.factory.producing ? 'cog loading' : 'cog'} />
                 </Header>
             </Divider>
-            <div className={'inputWrapper'}>{output}</div>
+            <div
+                className={'inputWrapper'}
+                style={{backgroundColor: props.factory.outputBlocked ? '#ff00001c' : 'none'}}
+            >{output}</div>
         </div>
     );
 };

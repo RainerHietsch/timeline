@@ -1,14 +1,16 @@
 export const Data = {
+    // DEBUG
     freeCosts: true,
     freeFactories: true,
 
+    // GAME
     updateInterval: 16,
     growthPowerMultiplier: 1.2,
 
-    // Leaders
+    // LEADERS
     ageGainPerHour: 12,
 
-    // Military
+    // MILITARY
     military: {
         infantry: {
             cost: [
@@ -17,7 +19,7 @@ export const Data = {
         }
     },
 
-    // Mine
+    // MINE
     res_max: 2,
     resIds: ['iron', 'copper', 'tin', 'coal', 'gold', 'uranium'],
     resFactor: {

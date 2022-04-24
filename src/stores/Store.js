@@ -28,8 +28,6 @@ export const addRes = (state, res, rawAmount) => {
     const resource =  state.resources[index];
     const amount = _.clamp(rawAmount, 0, resource.max - resource.count);
     resource.count = state.resources[index].count + amount;
-
-
 }
 
 export const getIndex = (needle, haystack) => {
@@ -75,6 +73,12 @@ const calculateGrowthValues = (state) =>
 
 const getBuilding = (state, name) => {
     return state.buildings[state.buildings.findIndex((obj => obj.id === name))];
+}
+
+export const getResource = (state, resourceId) => {
+    return _.filter(state.resources, (res) => {
+        return res.id === resourceId;
+    })[0];
 }
 
 const updateResourceProduction = (state, source) => {
@@ -374,6 +378,8 @@ const Store = createStore({
             id: 'asdsdf2123',
             active: true,
             producing: false,
+            inputBlocked: false,
+            outputBlocked: false,
             speed: 1,
             currentProduction: 0,
             blueprint: {

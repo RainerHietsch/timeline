@@ -36,7 +36,7 @@ function VertMenu() {
                     </Menu.Menu>
                 </Menu.Item>
                 <Menu.Item>
-                    <Icon name='grid layout' />
+                    <Icon name='wrench' />
                     Production
                     <Menu.Menu>
                         <Menu.Item
