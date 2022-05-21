@@ -1,12 +1,14 @@
 import { useStore } from '../stores/Store';
-import {useRef} from "react";
+import {useRef, useState} from "react";
 import * as Lang from "../data/Lang";
-import {Divider, Header, Icon} from "semantic-ui-react";
+import {Button, Divider, Header, Icon, Modal} from "semantic-ui-react";
 import {Line} from "rc-progress";
 import {getBlueprint} from "../functions/FactoryFunctions";
+import Blueprint from "./Blueprint";
 
 function Factory(props) {
     const [state, actions] = useStore();
+    const [open, setOpen] = useState(false)
 
     const blueprint = getBlueprint(state, props.factory.blueprint);
 
@@ -26,10 +28,31 @@ function Factory(props) {
         </div>
     })
 
+    const changeBlueprint = (factoryId) => {
+        state.factoryToChangeBP = factoryId;
+        setOpen(true);
+    }
+
+    const closeBlueprintModal = () => {
+        setOpen(false);
+    }
+
+    const availableBlueprints = state.blueprints.map((blueprint) => {
+        return <Blueprint bp={blueprint} close={closeBlueprintModal}/>
+    })
+
     return (
         <div className={'factoryWrapper'}>
+            <Modal
+                onClose={() => setOpen(false)}
+                onOpen={() => setOpen(true)}
+                open={open}
+            >
+                <div className={'blueprintsWrapper'}>{availableBlueprints}</div>
+            </Modal>
             <div className={'blueprintName'}>
                 <div>{blueprint.name}</div>
+                <div onClick={() => changeBlueprint(props.factory.id)} style={{cursor: 'pointer'}}>(change)</div>
                 <Line percent={props.factory.currentProduction} strokeWidth="4" strokeColor="#42d231" />
             </div>
             <div

@@ -350,6 +350,18 @@ const Store = createStore({
                     perSecond: 0
                 }
             },
+            {
+                id:'iron sword',
+                name: 'Iron Sword',
+                count: 0,
+                max: 50,
+                production: {
+                    buildings: [],
+                    tech: [],
+                    rate: [],
+                    perSecond: 0
+                }
+            }
         ],
         // BUILDINGS
         buildings: [],
@@ -390,6 +402,18 @@ const Store = createStore({
                 amount: 5
             }],
             secondsToProduce: 5
+        }, {
+            id: "1asdasd23asdasdas",
+            name: 'Iron Sword',
+            input: [{
+                id: 'iron',
+                amount: 10
+            }],
+            output: [{
+                id: 'iron sword',
+                amount: 1
+            }],
+            secondsToProduce: 10
         }],
 
         // Factories

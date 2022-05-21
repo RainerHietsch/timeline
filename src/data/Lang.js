@@ -16,4 +16,5 @@ export const MineResourcesLang = {
     'coal': 'Coal',
     'gold': 'Gold',
     'uranium': 'Uranium',
+    'iron sword': 'Iron Sword'
 }
