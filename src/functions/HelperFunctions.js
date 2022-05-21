@@ -26,7 +26,7 @@ export const getLongestTime = (state, costs) => {
     _.forEach(costs, (cost) => {
        const res = getResource(cost.id, state);
        if(cost.amount > res.max) never = true;
-       const secondsNeeded = _.round((cost.amount-res.count)/res.production.perSecond);
+       const secondsNeeded = _.ceil((cost.amount-res.count)/res.production.perSecond);
         if (secondsNeeded > longestTime) longestTime = secondsNeeded;
     });
     return never ? -1 : longestTime;
@@ -48,4 +48,11 @@ export const showLS = () => {
         console.log(_x.substr(0, 50) + " = " + (_xLen / 1024).toFixed(2) + " KB")
     }
     console.log("Total = " + (_lsTotal / 1024).toFixed(2) + " KB");
+}
+
+export const advanceAge = (currentAge) => {
+    switch (currentAge) {
+        case "Stone Age": return "Classical Age";
+        default: return "ERROR";
+    }
 }

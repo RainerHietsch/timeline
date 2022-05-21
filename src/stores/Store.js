@@ -36,8 +36,9 @@ export const getIndex = (needle, haystack) => {
 
 const getAvailableTechFunction = (state) => {
     state.availableTech = Tech.filter((techToCheck) => {
-        return techToCheck.req.every(val => state.finishedTech.includes(val)) &&
-            !state.finishedTech.includes(techToCheck.id)
+        return techToCheck.req.every(val => state.finishedTech.includes(val))
+            && !state.finishedTech.includes(techToCheck.id)
+            && techToCheck.era === state.currentAge
     })
     return state;
 }
@@ -177,6 +178,7 @@ const Store = createStore({
         growth: 0,
         storageLevel: 1,
         borderSecurity: 0,
+        activeMonument: null,
         military: {
           infantry: {
               name: 'Infantry',
@@ -371,7 +373,7 @@ const Store = createStore({
         maxKnownLands: 3,
         lands: [],
 
-        // Leader
+        // LEADER
         leader: undefined,
         leaderCandidates: [],
         leaderMinInfluenceCost: 10,
@@ -379,7 +381,7 @@ const Store = createStore({
         leaderInfluenceCostDecayPerSecond: 0.1,
         leaderHealthVisible: true,
 
-        // Mine
+        // MINE
         maxResourcesPerDeposit: 2,
         mine: {
             deposits: []
@@ -402,18 +404,6 @@ const Store = createStore({
                 amount: 5
             }],
             secondsToProduce: 5
-        }, {
-            id: "1asdasd23asdasdas",
-            name: 'Iron Sword',
-            input: [{
-                id: 'iron',
-                amount: 10
-            }],
-            output: [{
-                id: 'iron sword',
-                amount: 1
-            }],
-            secondsToProduce: 10
         }],
 
         // Factories
@@ -425,7 +415,7 @@ const Store = createStore({
             outputBlocked: false,
             speed: 1,
             currentProduction: 0,
-            blueprint: "12qsd32412qdqwas"
+            blueprint: null
         }]
     },
     // actions that trigger store mutation

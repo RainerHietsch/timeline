@@ -196,10 +196,21 @@ export const Tech = [
         }
     },
     {
+        id: 'architecture',
+        name: 'Architecture',
+        desc: 'Unlocks the first Monument choice',
+        era: 'Stone Age',
+        cat: 'Buildings',
+        cost: [
+            {id: 'science', name: 'Science', amount: 50},
+        ],
+        req: ['scouting','wheel','tribalculture']
+    },
+    {
         id: 'mining',
         name: 'Mining',
         desc: 'Dig for treasure!',
-        era: 'Classical',
+        era: 'Classical Age',
         cat: 'Economy',
         cost: [
             {id: 'science', name: 'Science', amount: 45},
@@ -211,5 +222,83 @@ export const Tech = [
                 MineFunctions.generateDeposit(state, known);
             }
         }
+    },
+    {
+        id: 'ironaxes',
+        name: 'Iron Axes',
+        desc: 'Improves Wood production efficiency',
+        era: 'Classical Age',
+        cat: 'Economy',
+        cost: [
+            {id: 'science', name: 'Science', amount: 45},
+        ],
+        req: ['mining'],
+        produces: [
+            {
+                id: "wood",
+                name: "Wood",
+                rate: 10,
+                absolute: false
+            }
+        ],
+    },
+    {
+        id: 'ironpickaxes',
+        name: 'Iron Pickaxes',
+        desc: 'Improves Stone production efficiency',
+        era: 'Classical Age',
+        cat: 'Economy',
+        cost: [
+            {id: 'science', name: 'Science', amount: 45},
+        ],
+        req: ['mining'],
+        produces: [
+            {
+                id: "stone",
+                name: "Stone",
+                rate: 10,
+                absolute: false
+            }
+        ],
+    },
+    {
+        id: 'manufacturing',
+        name: 'Manufacturing',
+        desc: 'Lets you combine resources to create new ones. Comes with a free crafting table.',
+        era: 'Classical Age',
+        cat: 'Economy',
+        cost: [
+            {id: 'science', name: 'Science', amount: 45},
+        ],
+        req: ['mining'],
+        produces: []
+    },
+    {
+        id: 'ironswords',
+        name: 'Iron Swords',
+        desc: 'Lets you produce Iron Swords to improve your Infantry',
+        era: 'Classical Age',
+        cat: 'Economy',
+        cost: [
+            {id: 'science', name: 'Science', amount: 45},
+        ],
+        req: ['manufacturing'],
+        produces: [],
+        onFinish: (state) => {
+            state.blueprints.push({
+                id: "ironsword",
+                name: 'Iron Sword',
+                input: [{
+                    id: 'iron',
+                    amount: 35
+                }],
+                output: [{
+                    id: 'iron sword',
+                    amount: 1
+                }],
+                secondsToProduce: 10
+            });
+        }
+
     }
 ]

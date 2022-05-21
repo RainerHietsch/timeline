@@ -27,9 +27,12 @@ function Blueprint(props) {
     })
 
     const selectBp = () => {
-        _.filter(state.factories, (factory) => {
+        const factory = _.filter(state.factories, (factory) => {
             return factory.id === state.factoryToChangeBP
-        })[0].blueprint = props.bp.id;
+        })[0];
+
+        factory.blueprint = props.bp.id;
+        factory.currentProduction = 0;
         props.close();
     }
 

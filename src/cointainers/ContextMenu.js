@@ -58,7 +58,7 @@ function ContextMenu() {
                 })}
             />
             <div className={'resourceName'} key={res.name}>{res.name}</div>
-            <div className={'resourceAmount'} key={`${res.name}Amount`}>{millify(Math.round(res.count), {precision: 2, lowercase: true})}/{res.max}</div>
+            <div className={'resourceAmount'} key={`${res.name}Amount`}>{millify(Math.floor(res.count), {precision: 2, lowercase: true})}/{res.max}</div>
             <Tippy
                 theme='light'
                 arrow={false}

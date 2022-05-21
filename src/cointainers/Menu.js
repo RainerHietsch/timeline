@@ -17,6 +17,7 @@ function VertMenu() {
                         >
                             Buildings
                         </Menu.Item>
+                        {state.finishedTech.includes('mining') &&
                         <Menu.Item
                             name='Mine'
                             active={state.screen === 'mine'}
@@ -24,6 +25,7 @@ function VertMenu() {
                         >
                             Mine
                         </Menu.Item>
+                        }
                         {state.finishedTech.includes('tribalculture') &&
                         <Menu.Item
                             name='Leader'
@@ -35,6 +37,7 @@ function VertMenu() {
                         }
                     </Menu.Menu>
                 </Menu.Item>
+                {state.finishedTech.includes('manufacturing') &&
                 <Menu.Item>
                     <Icon name='wrench' />
                     Production
@@ -48,6 +51,7 @@ function VertMenu() {
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu.Item>
+                }
                 <Menu.Item
                     name='browse'
                     active={state.screen === 'research'}
@@ -56,14 +60,16 @@ function VertMenu() {
                     <Icon name='lightbulb' />
                     Science
                 </Menu.Item>
+                {state.finishedTech.includes('architecture') &&
                 <Menu.Item
                     name='projects'
                     active={state.screen === 'projects'}
                     onClick={() => actions.changeScreen('projects')}
                 >
-                    <Icon name='lightbulb' />
+                    <Icon name='lightbulb'/>
                     Epic Projects
                 </Menu.Item>
+                }
                 {state.finishedTech.includes('weapons') &&
                 <Menu.Item
                     name='browse'

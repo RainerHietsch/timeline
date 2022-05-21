@@ -48,6 +48,7 @@ function Project(props) {
             _.remove(state.currentProjects, (project) => {
                return project.id === props.project.id;
             });
+            state.activeMonument = null;
         }
     }
 

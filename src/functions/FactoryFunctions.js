@@ -32,11 +32,12 @@ const checkOutputSpace = (state, factory) => {
 export const produce = (state) => {
 
     const activeFactories = state.factories.filter((factory) => {
-        return factory.active && factory.blueprint !== "";
+        return factory.active && factory.blueprint !== null;
     })
 
     activeFactories.map((factory) => {
 
+        if (!factory.blueprint) return;
         const blueprint = getBlueprint(state, factory.blueprint);
 
         // check if the factory is already producing something
