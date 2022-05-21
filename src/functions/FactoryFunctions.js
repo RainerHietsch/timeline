@@ -1,6 +1,7 @@
 import {Data} from "../data/Data";
 import {addRes, canAfford, payCosts} from "../stores/Store";
 import * as Store from "../stores/Store";
+import _ from 'lodash';
 
 const enoughResoureceSpace = (state, resourceId, amount) => {
     let enoughOutputSpace = true;
@@ -9,9 +10,14 @@ const enoughResoureceSpace = (state, resourceId, amount) => {
     return enoughOutputSpace;
 }
 
+export const getBlueprint = (state, id) => {
+    return _.filter(state.blueprints, (bp) => {return bp.id === id})[0];
+}
+
 const checkOutputSpace = (state, factory) => {
+    const blueprint = getBlueprint(state, factory.blueprint);
     let enoughOutputSpace = true;
-    factory.blueprint.output.map((output) => {
+    blueprint.output.map((output) => {
         if(!enoughResoureceSpace(state, output.id, output.amount)) enoughOutputSpace = false;
     });
     if(!enoughOutputSpace) {
@@ -26,10 +32,12 @@ const checkOutputSpace = (state, factory) => {
 export const produce = (state) => {
 
     const activeFactories = state.factories.filter((factory) => {
-        return factory.active && factory.blueprint;
+        return factory.active && factory.blueprint !== "";
     })
 
     activeFactories.map((factory) => {
+
+        const blueprint = getBlueprint(state, factory.blueprint);
 
         // check if the factory is already producing something
         if(factory.producing){
@@ -38,14 +46,14 @@ export const produce = (state) => {
             if(!checkOutputSpace(state,factory)) return;
 
             // advance a tick
-            const ticksToComplete = factory.blueprint.secondsToProduce*1000/Data.updateInterval;
+            const ticksToComplete = blueprint.secondsToProduce*1000/Data.updateInterval;
             const productionPerTick = 100/ticksToComplete;
             factory.currentProduction += productionPerTick;
 
             // check for finish
             if(factory.currentProduction >= 100){
                 // add output to resources
-                factory.blueprint.output.map((res) => {
+                blueprint.output.map((res) => {
                     addRes(state, res.id, res.amount);
                 })
 
@@ -57,7 +65,7 @@ export const produce = (state) => {
 
         } else {
             // check if we can start production
-            if(!canAfford(factory.blueprint.input, state, !Data.freeFactories)) {
+            if(!canAfford(blueprint.input, state, !Data.freeFactories)) {
                 factory.inputBlocked = true;
                 return;
             } else {
@@ -66,7 +74,7 @@ export const produce = (state) => {
             if(!checkOutputSpace(state,factory)) return;
 
             // deduct the resources
-            payCosts(factory.blueprint.input, state, !Data.freeFactories);
+            payCosts(blueprint.input, state, !Data.freeFactories);
 
             // set producing to true
             factory.producing = true;

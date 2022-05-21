@@ -42,7 +42,7 @@ function Deposit(props) {
         // if already active, do nothing
         if(props.deposit.active) return;
 
-        // TODO: check affordability
+        // TODO: check affordability & pay
 
         // switch to active
         state.mine.deposits.filter((deposit) => {
@@ -52,11 +52,18 @@ function Deposit(props) {
         // add resource production
         _.forEach(props.deposit.resources, (res) => {
             const stateRes = state.resources[getIndex(res.resource_id, state.resources)];
-            stateRes.production.rate.push({
-                name: 'Mine',
-                amount: res.amount,
-                absolute: true,
-            })
+
+            const existingMineProduction = _.filter(stateRes.production.rate, (rate) => { return rate.name === 'Mine'});
+            if(existingMineProduction.length === 0){
+                stateRes.production.rate.push({
+                    name: 'Mine',
+                    amount: res.amount,
+                    absolute: true,
+                })
+            } else {
+                existingMineProduction[0].amount += res.amount;
+            }
+
         })
     }
 

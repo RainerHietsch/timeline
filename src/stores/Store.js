@@ -374,6 +374,25 @@ const Store = createStore({
         },
 
         // Factories
+        blueprints: [{
+            id: "12qsd32412qdqwas",
+            name: 'Ancient Science',
+            input: [{
+                id: 'wood',
+                amount: 10
+            },
+                {
+                    id: 'stone',
+                    amount: 15
+                }],
+            output: [{
+                id: 'science',
+                amount: 5
+            }],
+            secondsToProduce: 5
+        }],
+
+        // Factories
         factories: [{
             id: 'asdsdf2123',
             active: true,
@@ -382,22 +401,7 @@ const Store = createStore({
             outputBlocked: false,
             speed: 1,
             currentProduction: 0,
-            blueprint: {
-                name: 'Ancient Science',
-                input: [{
-                    id: 'wood',
-                    amount: 10
-                },
-                {
-                    id: 'stone',
-                    amount: 15
-                }],
-                output: [{
-                    id: 'science',
-                    amount: 5
-                }],
-                secondsToProduce: 5
-            }
+            blueprint: "12qsd32412qdqwas"
         }]
     },
     // actions that trigger store mutation

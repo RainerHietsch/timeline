@@ -3,11 +3,14 @@ import {useRef} from "react";
 import * as Lang from "../data/Lang";
 import {Divider, Header, Icon} from "semantic-ui-react";
 import {Line} from "rc-progress";
+import {getBlueprint} from "../functions/FactoryFunctions";
 
 function Factory(props) {
     const [state, actions] = useStore();
 
-    const input = props.factory.blueprint.input.map((input) => {
+    const blueprint = getBlueprint(state, props.factory.blueprint);
+
+    const input = blueprint.input.map((input) => {
         return <div key={input.id} className={'inputRow'}>
             <div>{input.amount}</div>
             <div>x</div>
@@ -15,7 +18,7 @@ function Factory(props) {
         </div>
     })
 
-    const output = props.factory.blueprint.output.map((output) => {
+    const output = blueprint.output.map((output) => {
         return <div key={output.id} className={'inputRow'}>
             <div>{output.amount}</div>
             <div>x</div>
@@ -26,7 +29,7 @@ function Factory(props) {
     return (
         <div className={'factoryWrapper'}>
             <div className={'blueprintName'}>
-                <div>{props.factory.blueprint.name}</div>
+                <div>{blueprint.name}</div>
                 <Line percent={props.factory.currentProduction} strokeWidth="4" strokeColor="#42d231" />
             </div>
             <div
