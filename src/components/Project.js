@@ -5,6 +5,7 @@ import Slider from "rc-slider";
 import '../slider.css';
 import {useState} from "react";
 import _ from 'lodash';
+import {advanceAge} from "../functions/HelperFunctions";
 
 function Project(props) {
     const [state, actions] = useStore();
@@ -49,6 +50,7 @@ function Project(props) {
                return project.id === props.project.id;
             });
             state.activeMonument = null;
+            state.currentAge = advanceAge(state.currentAge);
         }
     }
 

@@ -3,13 +3,13 @@ import _ from "lodash";
 
 export const trainTroops = (state) => {
     const infantry = state.military.infantry;
-
     if(infantry.goal > infantry.count){
 
         //Leader Bonus
         let leaderBonusPercent = getLeaderInfantryProductionSpeedBonus(state);
 
         const ticksToBuild = infantry.secondsToBuild * (1000/Data.updateInterval);
+
         let buildPerTick = 100/ticksToBuild;
 
         //Leader Bonus

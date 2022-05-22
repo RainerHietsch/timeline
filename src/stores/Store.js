@@ -48,7 +48,10 @@ export const canAfford = (costs, state, override = false) => {
     let canAfford = true;
     costs.every((singleResCost) => {
         const index = getIndex(singleResCost.id, state.resources);
-        if (singleResCost.amount > state.resources[index].count){
+
+        const costAmount = singleResCost.dynamicCost ? singleResCost.amount(state) : singleResCost.amount
+
+        if (costAmount > state.resources[index].count){
             canAfford = false;
             return false;
         }
@@ -59,7 +62,8 @@ export const canAfford = (costs, state, override = false) => {
 
 export const payCosts = (costs, state, override = false) => {
     costs.forEach((singleResCost) => {
-        state.resources[getIndex(singleResCost.id, state.resources)].count -=  Data.freeCosts && !override ? 0 : singleResCost.amount;
+        const costAmount = singleResCost.dynamicCost ? singleResCost.amount(state) : singleResCost.amount
+        state.resources[getIndex(singleResCost.id, state.resources)].count -=  Data.freeCosts && !override ? 0 : costAmount;
     });
     return state;
 }
@@ -190,7 +194,7 @@ const Store = createStore({
               hp:10,
               maxHp: 10,
               armour: 0,
-              secondsToBuild: 45
+              secondsToBuild: 6
           },
           cavalry: {
               name: 'Cavalry',

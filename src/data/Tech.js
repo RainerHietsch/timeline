@@ -16,7 +16,7 @@ export const Tech = [
             {
                 id: "science",
                 name: "Science",
-                rate: 1,
+                rate: 10,
                 absolute: true
             }
         ],
@@ -299,6 +299,27 @@ export const Tech = [
                 secondsToProduce: 10
             });
         }
-
+    },
+    {
+        id: 'infupgradeironswords',
+        name: 'Upgrade Infantry',
+        desc: 'Costs 1 Iron Sword per Infantry. Gives +2 Max Damage.',
+        era: 'Classical Age',
+        cat: 'Economy',
+        cost: [
+            {
+                id: 'iron sword',
+                name: 'Iron Sword',
+                dynamicCost: true,
+                amount: (state) => {
+                    return state.military.infantry.count;
+                }
+            }
+        ],
+        req: ['ironswords'],
+        produces: [],
+        onFinish: (state) => {
+            state.military.infantry.maxAttack += 2;
+        }
     }
 ]

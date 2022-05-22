@@ -17,7 +17,6 @@ function ProjectsScreen() {
 
     const chooseProject = (id) => {
         state.activeMonument = id;
-        state.currentAge = advanceAge(state.currentAge);
     }
 
     const projects = getAvailableProjects(state).map((project) => {
