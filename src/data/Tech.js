@@ -217,7 +217,8 @@ export const Tech = [
         ],
         req: [],
         onFinish: (state) => {
-            for(let i=0;i<49;i++){
+            state.knownResources.push('iron');
+            for(let i=0;i<7;i++){
                 const known = i % 7 < 2;
                 MineFunctions.generateDeposit(state, known);
             }

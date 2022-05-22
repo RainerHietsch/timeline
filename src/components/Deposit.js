@@ -14,7 +14,7 @@ function Deposit(props) {
     let rng = seedrandom('depositplacementseed');
 
     const resources = _.orderBy(props.deposit.resources,['percentage'],['desc']).map((res) => {
-
+        if(!state.knownResources.includes(res.resource_id)) return;
         return <div key={Math.floor(rng() * 1000000)} className={'depositResource resId'+res.resource_id+' bolder'+(Math.floor(rng() * 3)+1)} style={{
             height: res.percentage+'%',
             width: res.percentage+'%',

@@ -369,8 +369,10 @@ const Store = createStore({
                 }
             }
         ],
+
         // BUILDINGS
         buildings: [],
+
         // LANDS
         landsqkm: 0.44,
         landUsed: 0,
@@ -387,6 +389,7 @@ const Store = createStore({
 
         // MINE
         maxResourcesPerDeposit: 2,
+        knownResources: [],
         mine: {
             deposits: []
         },
