@@ -33,7 +33,6 @@ const generateResource = () => {
 }
 
 export const produce = (state) => {
-
     // get active deposits
     const activeDeposits = state.mine.deposits.filter((deposit) => {return deposit.active});
     // loop and add resources

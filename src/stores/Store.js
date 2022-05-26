@@ -126,9 +126,11 @@ export const getLeaderBonusFor = (state, resId) => {
 }
 
 const calculateTotalProductionForResource = (state, resObj) => {
+
     const ratePartitioned = _.partition(resObj.production.rate,{ absolute: true});
 
     const absoluteProduction =  _.reduce(ratePartitioned[0], function(sum, n) {
+        if(n.name === 'Mine' && !state.knownResources.includes(resObj.id)) return sum;
         return sum + n.amount;
     }, 0);
 
