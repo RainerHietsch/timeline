@@ -23,7 +23,9 @@ function Deposit(props) {
     })
 
     const tooltipResourceLines = _.orderBy(props.deposit.resources,['percentage'],['desc']).map((res) => {
-        return <div key={res.key}>{Lang.MineResourcesLang[res.resource_id]}: {_.round(res.amount)}/s</div>;
+        if(state.knownResources.includes(res.resource_id)){
+            return <div key={res.key}>{Lang.MineResourcesLang[res.resource_id]}: {_.round(res.amount)}/s</div>;
+        }
     });
 
     const canRevealDeposit = () => {
@@ -71,7 +73,7 @@ function Deposit(props) {
         <div>
             {props.deposit.known ?
                 <div>
-                    <div>Resources: </div>
+                    <div>Resources</div>
                     {tooltipResourceLines}
                 </div>
                 :
