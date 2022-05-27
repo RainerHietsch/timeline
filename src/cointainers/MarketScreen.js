@@ -1,8 +1,9 @@
-import {useStore} from '../stores/Store';
+import {addRes, getIndex, useStore} from '../stores/Store';
 import _ from 'lodash';
 import Tippy from "@tippyjs/react";
 import {useState} from "react";
 import Slider from "rc-slider";
+import {Button} from "semantic-ui-react";
 
 
 function MarketScreen() {
@@ -37,7 +38,12 @@ function MarketScreen() {
         setToSell( _.round(e * getRatio(),1));
         setToBuy( _.round(e,1));
     }
-    
+
+    const trade = () => {
+        addRes(state, buyRes?.id, toBuy);
+        state.resources[getIndex(sellRes?.id, state.resources)].count -= toSell;
+    }
+
     return (
         <div className={'marketWrapper'}>
             <div className={'marketGoods left'}>{sellResources}</div>
@@ -56,6 +62,9 @@ function MarketScreen() {
                     step={1}
                     onChange={(e) => {setTradeValues(e)}}
                 />
+                <Button
+                    onClick={() => {trade()}}
+                >Trade!</Button>
             </div>
             <div className={'marketGoods right'}>{buyResources}</div>
         </div>
