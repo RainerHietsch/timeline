@@ -15,6 +15,7 @@ import ProjectsScreen from "./cointainers/ProjectsScreen";
 import LeaderScreen from "./cointainers/LeaderScreen";
 import MineScreen from "./cointainers/MineScreen";
 import ProductionScreen from "./cointainers/ProductionScreen";
+import MarketScreen from "./cointainers/MarketScreen";
 
 function App() {
     const [state, actions] = useStore();
@@ -47,6 +48,7 @@ function App() {
                 {state.screen === 'exploration' && <ExplorationScreen />}
                 {state.screen === 'settings' && <SettingsScreen />}
                 {state.screen === 'production' && <ProductionScreen />}
+                {state.screen === 'market' && <MarketScreen />}
             </div>
             <div className={'contextMenu'}>
                 <ContextMenu />

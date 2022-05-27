@@ -322,5 +322,29 @@ export const Tech = [
         onFinish: (state) => {
             state.military.infantry.maxAttack += 2;
         }
+    },
+    {
+        id: 'currency',
+        name: 'Currency',
+        desc: 'Make money!',
+        era: 'Classical Age',
+        cat: 'Economy',
+        cost: [
+            {id: 'science', name: 'Science', amount: 10},
+        ],
+        req: ['manufacturing'],
+        produces: []
+    },
+    {
+        id: 'market',
+        name: 'Market',
+        desc: 'Exchange goods!',
+        era: 'Classical Age',
+        cat: 'Economy',
+        cost: [
+            {id: 'science', name: 'Science', amount: 10},
+        ],
+        req: ['currency'],
+        produces: []
     }
 ]

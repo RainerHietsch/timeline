@@ -84,7 +84,7 @@ export const Buildings = [
             {id: 'wood', name: 'Wood', amount: 12},
         ],
         costMultiplier: 1.3,
-        req: ['masonry'],
+        req: ['irrigation'],
         consumes: [],
         produces: [],
         onFinish: (state) => {

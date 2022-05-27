@@ -49,6 +49,13 @@ function VertMenu() {
                         >
                             Crafting
                         </Menu.Item>
+                        <Menu.Item
+                            name='Market'
+                            active={state.screen === 'market'}
+                            onClick={() => actions.changeScreen('market')}
+                        >
+                            Market
+                        </Menu.Item>
                     </Menu.Menu>
                 </Menu.Item>
                 }
