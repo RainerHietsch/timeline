@@ -105,6 +105,9 @@ export const Tech = [
             {id: 'science', name: 'Science', amount: 35},
         ],
         req: ['masonry'],
+        onFinish: (state) => {
+            state.knownResources.push('manpower');
+        }
     },
     {
         id: 'scouting',

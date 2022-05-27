@@ -391,7 +391,7 @@ const Store = createStore({
 
         // MINE
         maxResourcesPerDeposit: 2,
-        knownResources: [],
+        knownResources: ['science', 'wood', 'stone'],
         mine: {
             deposits: []
         },

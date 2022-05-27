@@ -17,7 +17,7 @@ function ContextMenu() {
 
     const scale = chroma.scale(['red','orange','green']);
 
-    const resourceTable = state.resources.filter(res => res.count > 0).map((res) => {
+    const resourceTable = state.resources.filter(res => state.knownResources.includes(res.id)).map((res) => {
         const percentage = res.count/res.max;
 
         const rateTooltip =
