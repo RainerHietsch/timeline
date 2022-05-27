@@ -606,25 +606,28 @@ svg.CircularProgressbar.resourceProgress {
 
 .marketWrapper{
   display: flex;
+  color: white;
 }
 
 .marketGoods {
-  height: 500px;
-  width: 200px;
+  width: 33%;
 }
 
 .marketGoods.left {
-  background-color: red;
 }
 
 .marketGoods.right {
-  background-color: blue;
+  text-align: right;
 }
 
 .marketCenterTrade{
-  width: 200px;
-  height: 400px;
-  background-color: green;
+  width: 33%;
+  padding: 0 20px;
+}
+
+.chosenGoods, .tradeAmounts{
+  display: flex;
+  justify-content: space-between;
 }
 
 

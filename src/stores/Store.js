@@ -231,6 +231,7 @@ const Store = createStore({
                 name: 'Science',
                 count: 0,
                 max: 50,
+                tradeValue: 50,
                 production: {
                     buildings: [],
                     tech: ['fire'],
@@ -243,6 +244,7 @@ const Store = createStore({
                 name: 'Influence',
                 count: 0,
                 max: 50,
+                tradeValue: 50,
                 production: {
                     buildings: [],
                     tech: ['pigments'],
@@ -255,6 +257,7 @@ const Store = createStore({
                 name: 'Manpower',
                 count: 0,
                 max: 5,
+                tradeValue: 100,
                 production: {
                     buildings: ['farm'],
                     tech: [],
@@ -267,6 +270,7 @@ const Store = createStore({
               name: 'Wood',
               count: 0,
               max: 50,
+              tradeValue: 10,
               production: {
                   buildings: ['loggingcamp'],
                   tech: ['improvedtools'],
@@ -279,6 +283,7 @@ const Store = createStore({
               name: 'Stone',
               count: 0,
               max: 50,
+              tradeValue: 10,
               production: {
                   buildings: ['stonequarry'],
                   tech: ['improvedtools'],
@@ -291,6 +296,7 @@ const Store = createStore({
                 name: 'Iron',
                 count: 0,
                 max: 50,
+                tradeValue: 30,
                 production: {
                     buildings: [],
                     tech: [],
