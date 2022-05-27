@@ -604,6 +604,31 @@ svg.CircularProgressbar.resourceProgress {
   min-height: 60px;
 }
 
+.marketWrapper{
+  display: flex;
+}
+
+.marketGoods {
+  height: 500px;
+  width: 200px;
+}
+
+.marketGoods.left {
+  background-color: red;
+}
+
+.marketGoods.right {
+  background-color: blue;
+}
+
+.marketCenterTrade{
+  width: 200px;
+  height: 400px;
+  background-color: green;
+}
+
+
+
 
 
 

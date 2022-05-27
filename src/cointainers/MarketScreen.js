@@ -8,7 +8,9 @@ function MarketScreen() {
 
     return (
         <div className={'marketWrapper'}>
-            MARKET
+            <div className={'marketGoods left'}>AAA</div>
+            <div className={'marketCenterTrade'}>BBB</div>
+            <div className={'marketGoods right'}>CCC</div>
         </div>
     );
 }
