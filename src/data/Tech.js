@@ -50,6 +50,9 @@ export const Tech = [
                 absolute: true
             }
         ],
+        onFinish: (state) => {
+            state.knownResources.push('influence');
+        }
     },
     {
         id: 'masonry',

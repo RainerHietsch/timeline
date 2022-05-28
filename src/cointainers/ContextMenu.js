@@ -11,6 +11,7 @@ import _ from 'lodash';
 import * as HelperFunctions from "../functions/HelperFunctions";
 import * as LandFunctions from "../functions/LandFunctions";
 import * as randomString from "random-string";
+import {Line} from "rc-progress";
 
 function ContextMenu() {
     const [state, actions] = useStore();
@@ -22,10 +23,18 @@ function ContextMenu() {
 
         const rateTooltip =
             <div className={'rateTooltipWrapper'}>
-                <div className={'rateTooltipLine'}>
-                    <div>Leader</div>
-                    <div>+{getLeaderBonusFor(state, res.id)}%</div>
-                </div>
+
+                <div className={'resTooltipName'}>{res.name}</div>
+
+                <div className={'resTooltipAmount'}>{_.round(res.count)}/{_.round(res.max)}</div>
+
+                {getLeaderBonusFor(state, res.id) > 0 &&
+                    <div className={'rateTooltipLine'}>
+                        <div>Leader</div>
+                        <div>+{getLeaderBonusFor(state, res.id)}%</div>
+                    </div>
+                }
+
                 {res.production.rate.map((rate) => {
                     return <div key={`${randomString()}TTLine`} className={'rateTooltipLine'}>
                         <div>{rate.name}</div>
@@ -46,19 +55,7 @@ function ContextMenu() {
                     </div>
             </div>;
 
-        return <div key={`${res.name}Line`} className={'resourceLine'}>
-            <CircularProgressbar
-                key={`${res.name}Progress`}
-                value={percentage*100}
-                className={'resourceProgress'}
-                strokeWidth={50}
-                styles={buildStyles({
-                    strokeLinecap: "butt",
-                    pathColor: scale(percentage).hex()
-                })}
-            />
-            <div className={'resourceName'} key={res.name}>{res.name}</div>
-            <div className={'resourceAmount'} key={`${res.name}Amount`}>{millify(Math.floor(res.count), {precision: 2, lowercase: true})}/{res.max}</div>
+        return <div key={`${res.name}Line`} className={'resourceTile'}>
             <Tippy
                 theme='light'
                 arrow={false}
@@ -67,7 +64,20 @@ function ContextMenu() {
                 allowHTML={true}
                 content={rateTooltip}
             >
-                <div className={'resourceRate'} key={`${res.name}Rate`}>{Math.round(res.production.perSecond)}/s</div>
+            <div>
+                <div className={'resImage'} style={{backgroundImage: `url(./img/${res.id}.png)`}} />
+                <div className={'resProgressBar'} style={{
+                    height: `${(percentage*70)}px`,
+                    borderTopLeftRadius: `${(percentage - 0.96) * 100}px`,
+                    backgroundColor: `${
+                        percentage > 0.40 
+                            ?'green' 
+                            : percentage > 0.15 
+                                ? 'orange' 
+                                : 'red'}`
+                }}/>
+                <div className={'resAmount'}>{millify(_.round(res.count))}</div>
+            </div>
             </Tippy>
         </div>
     });
@@ -108,8 +118,10 @@ function ContextMenu() {
                 </Tippy>
 
             </div>
+            <div className={'resIconsWrapper'}>
+                {resourceTable}
+            </div>
 
-            {resourceTable}
         </div>
     );
 }

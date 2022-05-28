@@ -228,7 +228,7 @@ const Store = createStore({
         resources: [
             {
                 id:'science',
-                name: 'Science',
+                name: 'Wild Science',
                 count: 0,
                 max: 50,
                 tradeValue: 50,
