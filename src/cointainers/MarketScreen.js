@@ -54,6 +54,7 @@ function MarketScreen() {
                 </div>
                 <div className={'tradeAmounts'}>
                     <div className={'toSellRes'}>{toSell}</div>
+                    <div className={'ratio'}>1 : {1/getRatio()}</div>
                     <div className={'toBuyRes'}>{toBuy}</div>
                 </div>
                 <Slider
